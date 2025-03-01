@@ -1,0 +1,56 @@
+# Diretórios e arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Diretórios e arquivos do Android Studio
+.idea/
+*.iml
+
+# Diretórios de build
+/build/
+/.gradle/
+/.cxx/
+/local.properties
+
+# Cache do Gradle
+.gradle/
+**/build/
+
+# Arquivos de configuração do usuário
+*.keystore
+*.jks
+
+# Logs e arquivos temporários
+*.log
+/captures/
+
+# Arquivos de dependências específicas
+*.apk
+*.aab
+*.dex
+*.so
+*.jar
+*.class
+
+# Configurações específicas do sistema
+/local.properties
+
+# Firebase e Google Services
+/google-services.json
+/firebase/
+
+# NDK
+*.o
+*.lo
+*.la
+*.al
+*.a
+*.la
+
+# Arquivos gerados pelo compilador
+*.swp
+*.swo
+
+# Outros
+*.bak
+*.orig
