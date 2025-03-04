@@ -3,19 +3,18 @@ package br.com.fiap.ecoSafe.data.service
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitFactory {
+object RetrofitFactory {
 
-    private val URL = "https://apiv3.iucnredlist.org/api/v3/species/"
+    private const val URL = "https://api.iucnredlist.org/api/v4/"
 
-    private val retrofitFactory = Retrofit
-        .Builder()
-        .baseUrl(URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    fun getAnimalService(): AnimalService {
-        return retrofitFactory.create(AnimalService::class.java)
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
-
+    val sisService: TaxaSisService by lazy {
+        retrofit.create(TaxaSisService::class.java)
+    }
 }
