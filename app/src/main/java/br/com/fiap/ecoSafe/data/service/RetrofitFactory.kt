@@ -1,21 +1,31 @@
 package br.com.fiap.ecoSafe.data.service
 
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
-class RetrofitFactory {
+object RetrofitFactory {
 
-    private val URL = "https://apiv3.iucnredlist.org/api/v3/species/"
+    private const val URL = "https://api.iucnredlist.org/api/v4/"
 
-    private val retrofitFactory = Retrofit
-        .Builder()
-        .baseUrl(URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val retrofit: Retrofit by lazy {
+        val token = "Bearer Tbswz6LFLRHQACr5Teq52EiC2RWB1uQrZNnf"
 
-    fun getAnimalService(): AnimalService {
-        return retrofitFactory.create(AnimalService::class.java)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(token))
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl(URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
-
+    val sisService: TaxaSisService by lazy {
+        retrofit.create(TaxaSisService::class.java)
+    }
 }
