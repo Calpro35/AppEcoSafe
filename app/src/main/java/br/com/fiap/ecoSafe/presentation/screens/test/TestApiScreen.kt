@@ -7,7 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.com.fiap.ecoSafe.data.service.RetrofitFactory
-import br.com.fiap.ecoSafe.data.model.ApiResponse
+import br.com.fiap.ecoSafe.data.model.ApiTaxSisResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -16,7 +16,7 @@ import retrofit2.Response
 
 @Composable
 fun TestApiScreen() {
-    val animalInfo = remember { mutableStateOf<ApiResponse?>(null) }
+    val animalInfo = remember { mutableStateOf<ApiTaxSisResponse?>(null) }
     val isLoading = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -46,14 +46,14 @@ fun TestApiScreen() {
     }
 }
 
-fun fetchData(animalInfo: MutableState<ApiResponse?>, onComplete: () -> Unit) {
+fun fetchData(animalInfo: MutableState<ApiTaxSisResponse?>, onComplete: () -> Unit) {
     val token = "Tbswz6LFLRHQACr5Teq52EiC2RWB1uQrZNnf"
     val sisId = 11058
 
-    val call = RetrofitFactory.sisService.getTaxon(sisId, token) // Acessando corretamente
+    val call = RetrofitFactory.sisService.getTaxon(sisId, token)
 
-    call.enqueue(object : Callback<ApiResponse> {
-        override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+    call.enqueue(object : Callback<ApiTaxSisResponse> {
+        override fun onResponse(call: Call<ApiTaxSisResponse>, response: Response<ApiTaxSisResponse>) {
             if (response.isSuccessful) {
                 animalInfo.value = response.body()
                 Log.d("API_RESPONSE", "Sucesso: ${response.body()}")
@@ -63,7 +63,7 @@ fun fetchData(animalInfo: MutableState<ApiResponse?>, onComplete: () -> Unit) {
             onComplete()
         }
 
-        override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+        override fun onFailure(call: Call<ApiTaxSisResponse>, t: Throwable) {
             Log.e("API_RESPONSE", "Falha na requisição", t)
             onComplete()
         }
