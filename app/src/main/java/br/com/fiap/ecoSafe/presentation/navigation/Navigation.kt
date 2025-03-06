@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.com.fiap.ecoSafe.presentation.screens.cadastro.CadastroScreen
 import br.com.fiap.ecoSafe.presentation.screens.home.HomeScreen
-import br.com.fiap.ecoSafe.presentation.screens.login.LoginScreen
+import LoginScreen
 import br.com.fiap.ecoSafe.presentation.splash.SplashActivity
 
 sealed class Screen(val route: String) {
