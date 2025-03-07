@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.navigation.Screen
-import br.com.fiap.ecoSafe.tests.testBack
 import br.com.fiap.ecosafe.R
 import kotlinx.coroutines.delay
 
