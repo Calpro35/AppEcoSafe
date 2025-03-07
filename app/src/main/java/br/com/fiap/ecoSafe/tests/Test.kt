@@ -1,14 +1,14 @@
 package br.com.fiap.ecoSafe.tests
 
 import androidx.compose.runtime.MutableState
-import br.com.fiap.ecoSafe.data.model.ApiResponseAnimal
+//import br.com.fiap.ecoSafe.data.model.ApiResponseAnimal
 import br.com.fiap.ecoSafe.data.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 import java.sql.DriverManager.println
-
+/*
 var listaAnimais: List<ApiResponseAnimal> = emptyList<ApiResponseAnimal>()
 
 fun testBack(listaAnimaisState: MutableState<List<ApiResponseAnimal>>){
@@ -41,4 +41,4 @@ fun testBack(listaAnimaisState: MutableState<List<ApiResponseAnimal>>){
         println(animal.name)
         println(animal.result)
     }
-}
+}*/

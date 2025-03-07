@@ -7,14 +7,19 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.data.service.RetrofitFactory
 import br.com.fiap.ecoSafe.data.model.*
+import br.com.fiap.ecoSafe.data.service.traducao.ConsultaMyMemory.obterTraducao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @Composable
-fun TestApiScreen() {
+fun TestApiScreen(navController: NavController) {
     val taxonInfo = remember { mutableStateOf<ApiTaxSisResponse?>(null) }
     val kingdoms = remember { mutableStateOf<List<String>?>(null) }
     val kingdomData = remember { mutableStateOf<ApiResponseAssessment?>(null) }
@@ -166,6 +171,13 @@ fun fetchKingdomData(kingdom: String, kingdomData: MutableState<ApiResponseAsses
     call.enqueue(object : Callback<ApiResponseAssessment> {
         override fun onResponse(call: Call<ApiResponseAssessment>, response: Response<ApiResponseAssessment>) {
             kingdomData.value = response.body()
+
+            //Código de Exemplo para uso posterior da tradução
+            /*CoroutineScope(Dispatchers.IO).launch {
+                val traducao = obterTraducao("Chair and Mollusc RLA Coordinator")
+                //A traducao retornada é do tipo String
+                exampleVariable.value  = traducao
+            }*/
             onComplete()
         }
         override fun onFailure(call: Call<ApiResponseAssessment>, t: Throwable) {
