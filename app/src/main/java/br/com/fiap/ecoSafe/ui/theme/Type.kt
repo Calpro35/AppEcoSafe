@@ -2,9 +2,25 @@ package br.com.fiap.ecoSafe.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import br.com.fiap.ecosafe.R
+
+val RobotoFontFamily = FontFamily(
+    Font(R.font.roboto_regular)
+)
+val InterFontFamily = FontFamily(
+    Font(R.font.inter_18pt_regular)
+)
+
+val OpensSansFontFamily = FontFamily(
+    Font(R.font.opensans_regular)
+)
+
+
+
 
 // Set of Material typography styles to start with
 val Typography = Typography(
