@@ -10,7 +10,7 @@ object RetrofitFactory {
     private const val URL = "https://api.iucnredlist.org/api/v4/"
 
     private val retrofit: Retrofit by lazy {
-        val token = "Bearer Tbswz6LFLRHQACr5Teq52EiC2RWB1uQrZNnf"
+        val token = "Tbswz6LFLRHQACr5Teq52EiC2RWB1uQrZNnf"
 
         val client = OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(token))

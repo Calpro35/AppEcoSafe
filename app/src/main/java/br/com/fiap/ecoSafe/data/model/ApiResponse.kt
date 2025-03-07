@@ -16,6 +16,10 @@ data class ApiResponseAssessment(
     @SerializedName("assessments") val assessments: List<Assessment>
 )
 
+data class ApiResponsePhylum(
+    @SerializedName("phylum_names") var filos: List<String>
+)
+
 data class Taxon(
     @SerializedName("sis_id") val sisId: Int,
     @SerializedName("scientific_name") val scientificName: String,
