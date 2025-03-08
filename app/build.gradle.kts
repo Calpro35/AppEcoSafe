@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -65,4 +66,9 @@ dependencies {
     //depedências da API de tradução
     implementation("com.fasterxml.jackson.core:jackson-core:2.15.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+
+    //Login e Cadastro
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
 }
