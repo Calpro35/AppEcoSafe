@@ -24,7 +24,7 @@ import kotlinx.coroutines.delay
 fun SplashActivity(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(3000)
-        navController.navigate(Screen.Home.route) {
+        navController.navigate(Screen.Login.route) {
             popUpTo(0) // Remove a Splash Screen da pilha
         }
     }
@@ -39,7 +39,7 @@ fun SplashActivity(navController: NavController) {
             contentDescription = "Logo",
             modifier = Modifier
                 .size(190.dp)
-                .aspectRatio(1f) // Mantém a proporção (quadrado)
+                .aspectRatio(1f), // Mantém a proporção (quadrado)
         )
         //Código de Teste. Comentar se necessário para facilitar dev do Front-End
         /*val listaAnimaisState = remember { mutableStateOf<List<ApiResponseAnimal>>(emptyList()) }
