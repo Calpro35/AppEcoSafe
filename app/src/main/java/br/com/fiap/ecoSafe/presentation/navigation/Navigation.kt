@@ -20,9 +20,8 @@ sealed class Screen(val route: String) {
 
     object Forget : Screen("Forget_screen")
     object Home : Screen("home_screen")
-=======
-    //Objeto usado para testes do Back-End
-//>>>>>>> main
+   // Objeto usado para testes do Back-End
+
 }
 
 @Composable
@@ -34,9 +33,9 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(Screen.Forget.route){ ForgetScreen(navController)}
         composable(Screen.Home.route) { HomeScreen(navController) }
-=======
+
         //Composable apenas para Testes do Back End
-//>>>>>>> main
+
     }
 }
 

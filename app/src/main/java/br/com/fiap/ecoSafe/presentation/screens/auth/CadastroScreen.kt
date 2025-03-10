@@ -47,7 +47,7 @@ fun CadastroScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Título "Cadastro"
         Text(
@@ -142,7 +142,7 @@ fun CadastroScreen(navController: NavController) {
         )
 
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         // Botão de Voltar
         TextButton(

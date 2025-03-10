@@ -128,7 +128,7 @@ fun LoginScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Botão de Login com Gradiente
         GradientButton (
@@ -145,17 +145,17 @@ fun LoginScreen(navController: NavController) {
         ) {
             Text(
                 text = "Esqueceu a senha?",
-                fontSize = 14.sp,
+                fontSize = 15.sp,
                 color = Color(0xFF54408C)
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
 
         Text(
-            text = "Não tem uma conta?  Sign Up",
-            fontSize = 14.sp,
+            text = "Não tem uma conta? Sign Up",
+            fontSize = 16.sp,
             color = Color.Black,
             modifier = Modifier.clickable {
                 navController.navigate("cadastro_screen")

@@ -44,7 +44,7 @@ fun ForgetScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
 
         Image(
@@ -69,7 +69,7 @@ fun ForgetScreen(navController: NavController) {
 
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
 
 
@@ -106,7 +106,7 @@ fun ForgetScreen(navController: NavController) {
             }
         )
 
-        Spacer(modifier = Modifier.height(90.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         // Botão de Voltar
         TextButton(
