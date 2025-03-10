@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+//import br.com.fiap.ecoSafe.data.model.ApiResponse
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,21 +40,20 @@ fun SplashActivity(navController: NavController) {
             painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = "Logo",
             modifier = Modifier
-                .size(190.dp)
-                .aspectRatio(1f), // Mantém a proporção (quadrado)
+                .size(170.dp)
+                .aspectRatio(1f) // Mantém a proporção (quadrado)
+                .offset(x = 7.dp, y = 5.dp)
         )
 
 
-    }
 
+//           //Código de Teste. Comentar se necessário para facilitar dev do Front-End
+//          val listaAnimaisState = remember { mutableStateOf<List<ApiResponse>>(emptyList()) }
+//             testBack(listaAnimaisState)
+//            ListaAnimaisUI(listaAnimaisState.value)
+     }
 }
-//        //Código de Teste. Comentar se necessário para facilitar dev do Front-End
-//        val listaAnimaisState = remember { mutableStateOf<List<ApiResponse>>(emptyList()) }
-//        testBack(listaAnimaisState)
-//        ListaAnimaisUI(listaAnimaisState.value)
-//    }
-//}
-//
+
 //@Composable
 //fun ListaAnimaisUI(listaAnimais: List<ApiResponse>) {
 //    Column {
