@@ -25,7 +25,7 @@ class SpeciesRepository {
 
     fun getAllEspecies(csvFilePath: String): List<Specie> {
         val lines = File(csvFilePath).readLines()
-        return lines.drop(1) // Ignora o cabeçalho
+        return lines
             .mapNotNull { line ->
                 val fields = line.split(";")
                 if (fields.size > 13) fromCsv(fields) else null

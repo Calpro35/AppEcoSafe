@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,6 +18,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.data.model.User
+import br.com.fiap.ecoSafe.data.repository.UserRepository
 import br.com.fiap.ecoSafe.presentation.componets.GradientButton
 import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
 import br.com.fiap.ecoSafe.ui.theme.OpensSansFontFamily
@@ -29,6 +32,9 @@ fun CadastroScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    //Obtendo a instância do repositório
+    val context = LocalContext.current
+    val userRepository = UserRepository(context)
 
     Column(
         modifier = Modifier
@@ -131,7 +137,12 @@ fun CadastroScreen(navController: NavController) {
             text = "Cadastrar",
             onClick = {
                 // Lógica para cadastrar o usuário
-                if (password == confirmPassword) {
+                if (name != "" && email != "" && email.contains("@") &&
+                    email.contains(".com") && password != "" && confirmPassword != "" &&
+                    password == confirmPassword
+                ) {
+                    val user = User(0L, name, email, password)
+                    userRepository.salvar(user)
                     // Navegar para a próxima tela ou realizar o cadastro
                     navController.navigate("login_screen")
                 } else {
