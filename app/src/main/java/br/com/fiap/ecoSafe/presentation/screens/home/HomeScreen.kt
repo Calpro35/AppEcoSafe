@@ -2,7 +2,6 @@ package br.com.fiap.ecoSafe.presentation.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.CacheDrawModifierNode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -19,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 
 import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
@@ -29,11 +28,11 @@ fun HomeScreen(navController: NavController) {
     var isMenuOpen by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Conteúdo principal da tela
+        // Conteúdo principal da tela (rolável)
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 20.dp)
+                .padding(bottom = 56.dp) // Espaço para o footer
         ) {
             item {
                 HeaderSection(onMenuClick = { isMenuOpen = true })
@@ -57,6 +56,15 @@ fun HomeScreen(navController: NavController) {
                     isMenuOpen = false
                 }
             )
+        }
+
+        // Footer fixo na parte inferior
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        ) {
+            Footer(navController = navController)
         }
     }
 }
@@ -86,8 +94,6 @@ fun HeaderSection(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF2D2A2A),
-
-
             )
 
             // Ícone do menu hambúrguer (agora à direita)
@@ -161,7 +167,6 @@ fun HeaderSection(
             textAlign = TextAlign.Center
         )
     }
-
 }
 
 @Composable
@@ -200,33 +205,30 @@ fun StatisticItem(value: String, label: String) {
 
 @Composable
 fun IdentifySpeciesButton() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Button(
+            onClick = { /* Ação ao clicar no botão */ },
+            modifier = Modifier.size(width = 380.dp, height = 58.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF417505)),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.camera_explore),
+                contentDescription = "abrir camera",
+                modifier = Modifier.size(37.dp)
+                    .padding(5.dp) // Tamanho do ícone interno
+            )
 
-   Row(
-       modifier = Modifier.fillMaxWidth(),
-       horizontalArrangement = Arrangement.Center
-   ) {
-       Button(
-           onClick = { /* Ação ao clicar no botão */ },
-           modifier = Modifier.size(width = 380.dp, height = 58.dp),
-           colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF417505)),
-           shape = RoundedCornerShape(8.dp)
-
-       ) {
-           Icon(
-               painter = painterResource(id = R.drawable.camera_explore),
-               contentDescription = "abrir camera",
-               modifier = Modifier.size(37.dp)
-                   .padding(5.dp)// Tamanho do ícone interno
-           )
-
-           Text(
-               text = "Identificar Espécie",
-               fontSize = 18.sp,
-               letterSpacing = 1.sp,
-
-               )
-       }
-   }
+            Text(
+                text = "Identificar Espécie",
+                fontSize = 18.sp,
+                letterSpacing = 1.sp
+            )
+        }
+    }
 }
 
 @Composable
@@ -243,7 +245,6 @@ fun RecentDiscoveriesSection() {
             fontWeight = FontWeight.Bold,
             color = Color(0xFF1B5E20),
             modifier = Modifier.offset(x = 8.dp)
-            
         )
         Spacer(modifier = Modifier.height(8.dp))
         discoveries.forEach { discovery ->

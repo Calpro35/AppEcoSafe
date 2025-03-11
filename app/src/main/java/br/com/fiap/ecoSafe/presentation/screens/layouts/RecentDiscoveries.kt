@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 import br.com.fiap.ecoSafe.presentation.screens.home.HeaderSection
 import br.com.fiap.ecoSafe.presentation.screens.home.IdentifySpeciesButton
@@ -72,6 +73,15 @@ fun RecentDiscoveries(navController: NavController) {
                 }
             )
         }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        ) {
+            Footer(navController = navController)
+        }
+
     }
 }
 

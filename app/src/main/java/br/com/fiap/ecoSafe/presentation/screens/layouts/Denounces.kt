@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
@@ -60,6 +61,17 @@ fun Denounces(navController: NavController) {
                 }
             )
         }
+
+        // Footer fixo na parte inferior
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        ) {
+            Footer(navController = navController)
+        }
+
+
     }
 }
 

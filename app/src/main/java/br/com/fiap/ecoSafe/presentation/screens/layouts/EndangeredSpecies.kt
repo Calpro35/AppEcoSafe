@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
@@ -61,6 +62,16 @@ fun EndangeredSpecies(navController: NavController) {
                 }
             )
         }
+       // Footer fixo na parte inferior
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        ) {
+            Footer(navController = navController)
+        }
+
+
     }
 }
 
