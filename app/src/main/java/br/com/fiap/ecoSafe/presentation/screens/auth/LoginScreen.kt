@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.data.repository.UserRepository
 import br.com.fiap.ecoSafe.presentation.componets.GradientButton
 import br.com.fiap.ecoSafe.presentation.componets.SocialButton
 import br.com.fiap.ecoSafe.presentation.navigation.Screen
@@ -34,6 +36,9 @@ fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rememberMe by remember { mutableStateOf(false) }
+    //Obtendo a instância do repositório
+    val context = LocalContext.current
+    val userRepository = UserRepository(context)
 
     Column(
         modifier = Modifier
@@ -133,7 +138,14 @@ fun LoginScreen(navController: NavController) {
         // Botão de Login com Gradiente
         GradientButton (
             text = "Login",
-            onClick = { navController.navigate("home_screen") }
+            onClick = {
+                if(!email.equals("") && email.contains("@") && email.contains(".com")
+                    && !password.equals("")){
+                       if(userRepository.verificarLogin(email, password)){
+                           navController.navigate("home_screen")
+                       }
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(5.dp))
