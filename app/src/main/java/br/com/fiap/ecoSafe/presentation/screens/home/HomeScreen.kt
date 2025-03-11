@@ -2,6 +2,7 @@ package br.com.fiap.ecoSafe.presentation.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.CacheDrawModifierNode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -37,9 +39,9 @@ fun HomeScreen(navController: NavController) {
                 HeaderSection(onMenuClick = { isMenuOpen = true })
                 Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
                 StatisticsSection()
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(15.dp))
                 IdentifySpeciesButton()
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 RecentDiscoveriesSection()
                 Spacer(modifier = Modifier.height(24.dp))
                 ResourcesSection()
@@ -198,15 +200,33 @@ fun StatisticItem(value: String, label: String) {
 
 @Composable
 fun IdentifySpeciesButton() {
-    Button(
-        onClick = { /* Ação ao clicar no botão */ },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
-    ) {
-        Text(text = "Identificar Espécie", fontSize = 18.sp)
-    }
+
+   Row(
+       modifier = Modifier.fillMaxWidth(),
+       horizontalArrangement = Arrangement.Center
+   ) {
+       Button(
+           onClick = { /* Ação ao clicar no botão */ },
+           modifier = Modifier.size(width = 380.dp, height = 58.dp),
+           colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF417505)),
+           shape = RoundedCornerShape(8.dp)
+
+       ) {
+           Icon(
+               painter = painterResource(id = R.drawable.camera_explore),
+               contentDescription = "abrir camera",
+               modifier = Modifier.size(37.dp)
+                   .padding(5.dp)// Tamanho do ícone interno
+           )
+
+           Text(
+               text = "Identificar Espécie",
+               fontSize = 18.sp,
+               letterSpacing = 1.sp,
+
+               )
+       }
+   }
 }
 
 @Composable
@@ -221,7 +241,9 @@ fun RecentDiscoveriesSection() {
             text = "Descobertas Recentes",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF1B5E20)
+            color = Color(0xFF1B5E20),
+            modifier = Modifier.offset(x = 8.dp)
+            
         )
         Spacer(modifier = Modifier.height(8.dp))
         discoveries.forEach { discovery ->

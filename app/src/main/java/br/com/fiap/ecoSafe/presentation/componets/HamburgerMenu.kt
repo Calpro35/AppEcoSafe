@@ -40,7 +40,7 @@ fun HamburgerMenu(onCloseClick: () -> Unit, onItemClick: (String) -> Unit) {
         MenuItem("Descobertas Recentes", Screen.RecentDiscoveries.route, R.drawable.search_ham),
         MenuItem("Explorar", Screen.Explore.route, R.drawable.camera_ham),
         MenuItem("Áreas Ameaçadas", Screen.ThreatenedAreas.route, R.drawable.map_ham),
-        MenuItem("Espécies Ameaçadas", Screen.ThreatenedAreas.route, R.drawable.book_ham),
+        MenuItem("Espécies Ameaçadas", Screen.EndangeredSpecies.route, R.drawable.book_ham),
         MenuItem("Denúncias", Screen.Denounces.route, R.drawable.hand_ham),
         MenuItem("Perfil", Screen.Profile.route, R.drawable.person_ham),
         MenuItem("Configurações", Screen.Setting.route, R.drawable.settings_ham),

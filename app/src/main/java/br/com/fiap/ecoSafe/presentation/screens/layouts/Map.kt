@@ -32,7 +32,8 @@ import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
 @Composable
-fun Profile(navController: NavController) {
+fun Mapa(navController: NavController) {
+
 
     var isMenuOpen by remember { mutableStateOf(false) }
 
@@ -44,9 +45,10 @@ fun Profile(navController: NavController) {
                 .padding(top = 20.dp)
         ) {
             item {
-                HeaderProfile(onMenuClick = { isMenuOpen = true })
+                HeaderMap(onMenuClick = { isMenuOpen = true })
                 Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
-                MainProfile()
+                MainMap()
+
             }
         }
 
@@ -61,16 +63,13 @@ fun Profile(navController: NavController) {
             )
         }
     }
-
 }
 
 
 
 
-
-
 @Composable
-fun HeaderProfile(
+fun HeaderMap(
     onMenuClick: () -> Unit
 ) {
     Column(
@@ -86,13 +85,12 @@ fun HeaderProfile(
         ) {
             // Texto "Home" centralizado
             Text(
-                text = "Perfil",
+                text = "Mapa",
                 modifier = Modifier
                     .weight(1f) // Ocupa o espaço restante e centraliza o texto
                     .offset(x = 22.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
-                letterSpacing = 1.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF2D2A2A),
 
@@ -120,11 +118,10 @@ fun HeaderProfile(
 
 }
 
-
 @Composable
-fun MainProfile(modifier: Modifier = Modifier) {
+fun MainMap(modifier: Modifier = Modifier) {
 
-    Spacer(modifier = Modifier.height(15.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -139,5 +136,9 @@ fun MainProfile(modifier: Modifier = Modifier) {
 
 
 }
+
+
+
+
 
 
