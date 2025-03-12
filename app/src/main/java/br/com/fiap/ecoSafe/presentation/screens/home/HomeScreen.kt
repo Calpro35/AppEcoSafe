@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
+import br.com.fiap.ecoSafe.presentation.componets.BannerItem
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 
 import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
@@ -27,7 +28,7 @@ import br.com.fiap.ecosafe.R
 fun HomeScreen(navController: NavController) {
     var isMenuOpen by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().padding(top =5.dp)) {
         // Conteúdo principal da tela (rolável)
         LazyColumn(
             modifier = Modifier
@@ -36,9 +37,9 @@ fun HomeScreen(navController: NavController) {
         ) {
             item {
                 HeaderSection(onMenuClick = { isMenuOpen = true })
-                Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
+                Spacer(modifier = Modifier.height(5.dp))
                 StatisticsSection()
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 IdentifySpeciesButton()
                 Spacer(modifier = Modifier.height(30.dp))
                 RecentDiscoveriesSection()
@@ -89,7 +90,7 @@ fun HeaderSection(
                 text = "Home",
                 modifier = Modifier
                     .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                    .offset(x = 22.dp),
+                    .offset(x = 22.dp,y = 3.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
@@ -110,11 +111,13 @@ fun HeaderSection(
         }
 
         // Reduzir o espaço abaixo do banner
-        Spacer(modifier = Modifier.height(4.dp)) // Espaço reduzido
+        Spacer(modifier = Modifier.height(8.dp)) // Espaço reduzido
 
         // Banner e logo
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth() // Ocupa a largura máxima disponível
+
         ) {
             Image(
                 painter = painterResource(id = R.drawable.banner),
@@ -144,7 +147,7 @@ fun HeaderSection(
         }
 
         // Reduzir o espaço abaixo do banner
-        Spacer(modifier = Modifier.height(10.dp)) // Espaço reduzido
+        Spacer(modifier = Modifier.height(5.dp)) // Espaço reduzido
 
         // Textos abaixo do banner
         Text(
@@ -170,38 +173,62 @@ fun HeaderSection(
 }
 
 @Composable
-fun StatisticsSection() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(0.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        StatisticItem("1254", "Espécies")
-        StatisticItem("120.54", "Usuários")
-        StatisticItem("156", "Países")
-    }
-}
+fun StatisticsSection(
+) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(13.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Primeira linha com dois banners lado a lado
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Banner 1: Espécies
+                BannerItem(
+                    icon = painterResource(id = R.drawable.leaf_banner),
+                    number = "1254",
+                    text = "Espécies",
+                    onClick = { /* Ação ao clicar */ },
+                    modifier = Modifier
+                        .weight(1f) // Ocupa o mesmo espaço
+                        .padding(end = 8.dp) // Espaçamento entre os banners
+                        .height(90.dp) // Mesma altura do terceiro banner
+                )
 
-@Composable
-fun StatisticItem(value: String, label: String) {
-    Column(
-        modifier = Modifier.padding(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = value,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1B5E20)
-        )
-        Text(
-            text = label,
-            fontSize = 14.sp,
-            color = Color(0xFF388E3C)
-        )
-    }
-}
+                // Banner 2: Usuários
+                BannerItem(
+                    icon = painterResource(id = R.drawable.group_banner),
+                    number = "120.54",
+                    text = "Usuários",
+                    onClick = { /* Ação ao clicar */ },
+                    modifier = Modifier
+                        .weight(1f) // Ocupa o mesmo espaço
+                        .padding(start = 8.dp) // Espaçamento entre os banners
+                        .height(90.dp) // Mesma altura do terceiro banner
+                )
+            }
+
+            // Espaçamento entre os banners
+            Spacer(modifier = Modifier.height(15.dp))
+
+            // Banner 3: Países (banner maior)
+            BannerItem(
+                icon = painterResource(id = R.drawable.world), // Substitua pelo seu ícone
+                number = "156",
+                text = "Países",
+                onClick = { /* Ação ao clicar */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(90.dp) // Mesma altura dos outros banners
+            )
+        }
+ }
+
+
+
 
 @Composable
 fun IdentifySpeciesButton() {
@@ -242,11 +269,11 @@ fun RecentDiscoveriesSection() {
         Text(
             text = "Descobertas Recentes",
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1B5E20),
-            modifier = Modifier.offset(x = 8.dp)
+            fontWeight = FontWeight.SemiBold,
+            color = Color(0xFF35580C),
+            modifier = Modifier.offset(x = 15.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         discoveries.forEach { discovery ->
             DiscoveryItem(discovery)
             Spacer(modifier = Modifier.height(8.dp))
