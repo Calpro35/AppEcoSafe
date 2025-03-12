@@ -1,49 +1,36 @@
 package br.com.fiap.ecoSafe.presentation.screens.layouts
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
-import br.com.fiap.ecoSafe.presentation.screens.home.HeaderSection
-import br.com.fiap.ecoSafe.presentation.screens.home.IdentifySpeciesButton
-import br.com.fiap.ecoSafe.presentation.screens.home.RecentDiscoveriesSection
-import br.com.fiap.ecoSafe.presentation.screens.home.ResourcesSection
-import br.com.fiap.ecoSafe.presentation.screens.home.StatisticsSection
 import br.com.fiap.ecosafe.R
 
 @Composable
 fun RecentDiscoveries(navController: NavController) {
-
     var isMenuOpen by remember { mutableStateOf(false) }
-
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Conteúdo principal da tela
@@ -55,11 +42,9 @@ fun RecentDiscoveries(navController: NavController) {
             item {
                 HeaderDiscovery(
                     onMenuClick = { isMenuOpen = true },
-                    onBackClick = {navController.navigate("home_Screen")}
+                    onBackClick = { navController.navigate("home_Screen") }
                 )
-                Spacer(modifier = Modifier
-                    .height(15.dp)
-                    .padding(10.dp))
+                Spacer(modifier = Modifier.height(15.dp))
                 MainRecovery()
             }
         }
@@ -81,15 +66,13 @@ fun RecentDiscoveries(navController: NavController) {
         ) {
             Footer(navController = navController)
         }
-
     }
 }
-
 
 @Composable
 fun HeaderDiscovery(
     onMenuClick: () -> Unit,
-    onBackClick: () -> Unit // Adicione um parâmetro para a ação de voltar
+    onBackClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -99,13 +82,13 @@ fun HeaderDiscovery(
     ) {
         // Ícone de voltar à esquerda
         IconButton(
-            onClick = onBackClick, // Ação ao clicar na seta de voltar
-            modifier = Modifier.size(48.dp) // Tamanho do ícone aumentado
+            onClick = onBackClick,
+            modifier = Modifier.size(48.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack, // Ícone de seta de voltar
+                imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Voltar",
-                tint = Color.Black // Cor do ícone
+                tint = Color.Black
             )
         }
 
@@ -115,95 +98,193 @@ fun HeaderDiscovery(
         // Ícone do menu hambúrguer à direita
         IconButton(
             onClick = onMenuClick,
-            modifier = Modifier.size(48.dp) // Tamanho do ícone aumentado
+            modifier = Modifier.size(48.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.menu_ham),
                 contentDescription = "Abrir Menu",
-                modifier = Modifier.size(32.dp) // Tamanho do ícone interno
+                modifier = Modifier.size(32.dp)
             )
         }
     }
 }
 
-
-
 @Composable
 fun MainRecovery(modifier: Modifier = Modifier) {
-    Row {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        // Barra de Pesquisa
+        SearchBar()
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(
             text = "Descobertas Recentes",
-            modifier = Modifier
-                .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                .offset(x = 15.dp),
+            modifier = Modifier.padding(vertical = 16.dp),
             fontSize = 18.sp,
             color = Color(0xFF1B5E20),
+            fontWeight = FontWeight.Bold
+        )
 
-
-            )
+        // Carrossel de animais
+        AnimalCarousel()
     }
-
-    Spacer(modifier = Modifier.height(15.dp))
-
-   Column(
-          modifier = Modifier.fillMaxSize()
-   ){
-
-
-       //Conteudo da pagina
-
-
-
-   }
-
-
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBar() {
+    var searchQuery by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
+    OutlinedTextField(
+        value = searchQuery,
+        onValueChange = { searchQuery = it },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        placeholder = { Text("Pesquisar...") },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "Ícone de Pesquisa"
+            )
+        },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                focusManager.clearFocus() // Fecha o teclado ao pressionar "Search"
+                // Adicione aqui a lógica para realizar a pesquisa
+            }
+        ),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color.Blue,
+            unfocusedBorderColor = Color.Gray
+        )
+    )
+}
 
+@Composable
+fun AnimalCarousel() {
+    val animals = listOf(
+        Animal(
+            name = "Arara Azul",
+            location = "Pantanal, Brasil",
+            date = "11/02/2025",
+            time = "12:45 p.m.",
+            status = "Em perigo",
+            imageRes = R.drawable.arara
+        ),
+        Animal(
+            name = "Onça Pintada",
+            location = "Amazônia, Brasil",
+            date = "16/02/2025",
+            time = "10:30 a.m.",
+            status = "Vulnerável",
+            imageRes = R.drawable.oncapintada
+        ),
+        Animal(
+            name = "Tartaruga Gigante",
+            location = "Galápagos, Equador",
+            date = "17/02/2025",
+            time = "09:15 a.m.",
+            status = "Criticamente em perigo",
+            imageRes = R.drawable.tartarugagigante
+        )
+    )
 
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center // Centraliza o conteúdo no meio da tela
+    ) {
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(animals) { animal ->
+                AnimalCard(animal = animal)
+            }
+        }
+    }
+}
 
+@Composable
+fun AnimalCard(animal: Animal) {
+    Card(
+        modifier = Modifier
+            .width(300.dp)
+            .height(400.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(248,248,255) // Cor de fundo do card
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Image(
+                painter = painterResource(id = animal.imageRes),
+                contentDescription = animal.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentScale = ContentScale.Crop
+            )
 
+            Spacer(modifier = Modifier.height(16.dp))
 
+            Text(
+                text = animal.name,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
 
+            Spacer(modifier = Modifier.height(8.dp))
 
+            Text(
+                text = animal.location,
+                fontSize = 16.sp
+            )
 
+            Spacer(modifier = Modifier.height(8.dp))
 
+            Text(
+                text = "Data: ${animal.date}",
+                fontSize = 16.sp
+            )
 
+            Spacer(modifier = Modifier.height(8.dp))
 
+            Text(
+                text = "Hora: ${animal.time}",
+                fontSize = 16.sp
+            )
 
+            Spacer(modifier = Modifier.height(8.dp))
 
+            Text(
+                text = "Situação: ${animal.status}",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Red
+            )
+        }
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+data class Animal(
+    val name: String,
+    val location: String,
+    val date: String,
+    val time: String,
+    val status: String,
+    val imageRes: Int
+)
