@@ -247,11 +247,25 @@ fun fetchPhylumData(phylum: String, phylumData: MutableState<ApiResponseAssessme
     })
 }
 
-fun fetchSpeciesData(context: Context, commonName: String, speciesData: MutableState<ApiSpeciesLinkResponse?>, onComplete: () -> Unit){
+fun fetchSpeciesData(context: Context, commonName: String, speciesData: MutableState<ApiSpeciesLinkResponse?>,
+                     onComplete: () -> Unit){
     val specie = speciesRepository.getSpecieByName( context, commonName)
     if (specie != null) {
         println(specie.especie)
+        val call = RetrofitFactory.speciesLinkService.getSpecie(specie.especie)
+        call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
+            override fun onResponse(
+                call: Call<ApiSpeciesLinkResponse>,
+                response: Response<ApiSpeciesLinkResponse>
+            ) {
+                speciesData.value = response.body()
+                println(speciesData.value?.features?.get(0)?.properties?.kingdom)
+                onComplete()
+            }
+
+            override fun onFailure(call: Call<ApiSpeciesLinkResponse>, t: Throwable) {
+                onComplete()
+            }
+        })
     }
-    onComplete()
-    //val call = RetrofitFactory.speciesLinkService.getSpecie()
 }
