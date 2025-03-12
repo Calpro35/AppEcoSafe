@@ -50,3 +50,11 @@ data class Scope(
 data class Description(
     @SerializedName("en") val en: String
 )
+
+data class ApiSpeciesLinkResponse(
+    val features: List<Features>
+)
+
+data class Features(
+    val properties: SpecieMain
+)

@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.data.repository
 
+import android.content.Context
 import br.com.fiap.ecoSafe.data.model.Specie
 import java.io.File
 
@@ -7,7 +8,7 @@ class SpeciesRepository {
 
     private fun fromCsv(fields: List<String>): Specie {
         return Specie(
-            id = fields[0].toInt(),
+            id = fields[0],
             grupoTaxonomico = fields[1],
             ordem = fields[2],
             familia = fields[3],
@@ -23,7 +24,7 @@ class SpeciesRepository {
         )
     }
 
-    fun getAllEspecies(csvFilePath: String): List<Specie> {
+    fun getAllSpecies(csvFilePath: String): List<Specie> {
         val lines = File(csvFilePath).readLines()
         return lines
             .mapNotNull { line ->
@@ -31,4 +32,17 @@ class SpeciesRepository {
                 if (fields.size > 13) fromCsv(fields) else null
             }
     }
+
+    fun getSpecieByName(context: Context, specieName: String): Specie? {
+        val inputStream = context.assets.open("fauna_ameacada_2021.txt")
+        val lines = inputStream.bufferedReader().use { it.readLines() }
+
+        return lines
+            .mapNotNull { line ->
+                val fields = line.split(";")
+                if (fields.size > 13) fromCsv(fields) else null
+            }
+            .find { it.especie.equals(specieName, ignoreCase = true) }
+    }
+
 }

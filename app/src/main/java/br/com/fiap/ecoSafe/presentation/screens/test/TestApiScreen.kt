@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.ui.screens
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.data.service.RetrofitFactory
 import br.com.fiap.ecoSafe.data.model.*
+import br.com.fiap.ecoSafe.data.repository.SpeciesRepository
+import br.com.fiap.ecoSafe.data.repository.UserRepository
 import br.com.fiap.ecoSafe.data.service.traducao.ConsultaMyMemory.obterTraducao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,23 +21,31 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+val speciesRepository = SpeciesRepository()
+
 @Composable
-fun TestApiScreen(navController: NavController) {
+fun TestApiScreen(navController: NavController, context: Context) {
     val taxonInfo = remember { mutableStateOf<ApiTaxSisResponse?>(null) }
     val kingdoms = remember { mutableStateOf<List<String>?>(null) }
     val kingdomData = remember { mutableStateOf<ApiResponseAssessment?>(null) }
     val phylums = remember { mutableStateOf<List<String>?>(null) }
     val phylumData = remember { mutableStateOf<ApiResponseAssessment?>(null) }
+    val specieData = remember { mutableStateOf<ApiSpeciesLinkResponse?>(null) }
     val isLoading = remember { mutableStateOf(false) }
 
     var sisId by remember { mutableStateOf("") }
     var kingdom by remember { mutableStateOf("") }
     var phylum by remember { mutableStateOf("") }
+    var commonName = remember { mutableStateOf("") }
+    var specie by remember { mutableStateOf(Specie("", "", "",
+        "", "",
+    "", "",false, false, false,
+        false, false, false)) }
 
     Column(modifier = Modifier.padding(16.dp)) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
-                OutlinedTextField(
+                /*OutlinedTextField(
                     value = sisId,
                     onValueChange = { sisId = it },
                     label = { Text("ID do Taxon (sis_id)") },
@@ -132,7 +143,31 @@ fun TestApiScreen(navController: NavController) {
 
                 phylumData.value?.let {
                     Text("Filo $phylum possui ${it.assessments.size} avaliações.")
+                }*/
+
+                OutlinedTextField(
+                    value = commonName.value,
+                    onValueChange = { commonName.value = it },
+                    label = { Text("ID do Taxon (sis_id)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Button(
+                    onClick = {
+                        //isLoading.value = true
+                        fetchSpeciesData(context, commonName.value, specieData) {
+                            //isLoading.value = false
+                        }
+                    },
+                    //enabled = sisId.isNotBlank()
+                ) {
+                    Text("Buscar Taxon")
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text("Espécie: ${specie.especie}")
+                Text("Família: ${specie.familia}")
+                Text("Ameaça: ${specie.cr}")
             }
         }
     }
@@ -210,4 +245,13 @@ fun fetchPhylumData(phylum: String, phylumData: MutableState<ApiResponseAssessme
             onComplete()
         }
     })
+}
+
+fun fetchSpeciesData(context: Context, commonName: String, speciesData: MutableState<ApiSpeciesLinkResponse?>, onComplete: () -> Unit){
+    val specie = speciesRepository.getSpecieByName( context, commonName)
+    if (specie != null) {
+        println(specie.especie)
+    }
+    onComplete()
+    //val call = RetrofitFactory.speciesLinkService.getSpecie()
 }

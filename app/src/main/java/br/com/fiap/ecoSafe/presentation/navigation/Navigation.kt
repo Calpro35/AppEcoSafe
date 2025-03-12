@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.presentation.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -39,8 +40,8 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+fun AppNavigation(navController: NavHostController, context: Context) {
+    NavHost(navController = navController, startDestination = Screen.TestApi.route) {
         composable(Screen.Splash.route) { SplashActivity(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Cadastro.route) { CadastroScreen(navController) }
@@ -56,6 +57,6 @@ fun AppNavigation(navController: NavHostController) {
         composable(Screen.Mapa.route) { Mapa(navController) }
 
         // Composable apenas para Testes do Back End
-        composable(Screen.TestApi.route) { TestApiScreen(navController) }
+        composable(Screen.TestApi.route) { TestApiScreen(navController, context) }
     }
 }
