@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
+import br.com.fiap.ecoSafe.presentation.componets.AnimalCarousel
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
@@ -109,6 +110,7 @@ fun HeaderDiscovery(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainRecovery(modifier: Modifier = Modifier) {
     Column(
@@ -129,9 +131,11 @@ fun MainRecovery(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold
         )
 
-        // Carrossel de animais
+
+        // componente AnimalCarrouselDiscoveries.kt
         AnimalCarousel()
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -167,124 +171,3 @@ fun SearchBar() {
     )
 }
 
-@Composable
-fun AnimalCarousel() {
-    val animals = listOf(
-        Animal(
-            name = "Arara Azul",
-            location = "Pantanal, Brasil",
-            date = "11/02/2025",
-            time = "12:45 p.m.",
-            status = "Em perigo",
-            imageRes = R.drawable.arara
-        ),
-        Animal(
-            name = "Onça Pintada",
-            location = "Amazônia, Brasil",
-            date = "16/02/2025",
-            time = "10:30 a.m.",
-            status = "Vulnerável",
-            imageRes = R.drawable.oncapintada
-        ),
-        Animal(
-            name = "Tartaruga Gigante",
-            location = "Galápagos, Equador",
-            date = "17/02/2025",
-            time = "09:15 a.m.",
-            status = "Criticamente em perigo",
-            imageRes = R.drawable.tartarugagigante
-        )
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center // Centraliza o conteúdo no meio da tela
-    ) {
-        LazyRow(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(vertical = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(animals) { animal ->
-                AnimalCard(animal = animal)
-            }
-        }
-    }
-}
-
-@Composable
-fun AnimalCard(animal: Animal) {
-    Card(
-        modifier = Modifier
-            .width(300.dp)
-            .height(400.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(248,248,255) // Cor de fundo do card
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Image(
-                painter = painterResource(id = animal.imageRes),
-                contentDescription = animal.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = animal.name,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = animal.location,
-                fontSize = 16.sp
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Data: ${animal.date}",
-                fontSize = 16.sp
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Hora: ${animal.time}",
-                fontSize = 16.sp
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Situação: ${animal.status}",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Red
-            )
-        }
-    }
-}
-
-data class Animal(
-    val name: String,
-    val location: String,
-    val date: String,
-    val time: String,
-    val status: String,
-    val imageRes: Int
-)

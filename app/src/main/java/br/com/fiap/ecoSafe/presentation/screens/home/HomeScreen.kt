@@ -1,10 +1,14 @@
 package br.com.fiap.ecoSafe.presentation.screens.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
+import br.com.fiap.ecoSafe.presentation.componets.AnimalCarousel
 import br.com.fiap.ecoSafe.presentation.componets.BannerItem
 import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
-
 import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
 import br.com.fiap.ecosafe.R
 
@@ -90,7 +94,7 @@ fun HeaderSection(
                 text = "Home",
                 modifier = Modifier
                     .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                    .offset(x = 22.dp,y = 3.dp),
+                    .offset(x = 22.dp,y = 4.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
@@ -260,11 +264,6 @@ fun IdentifySpeciesButton() {
 
 @Composable
 fun RecentDiscoveriesSection() {
-    val discoveries = listOf(
-        Discovery("Arara-azul", "Pantanal, Brasil"),
-        Discovery("Onça-Pintada", "Amazônia")
-    )
-
     Column {
         Text(
             text = "Descobertas Recentes",
@@ -273,48 +272,20 @@ fun RecentDiscoveriesSection() {
             color = Color(0xFF35580C),
             modifier = Modifier.offset(x = 15.dp)
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        discoveries.forEach { discovery ->
-            DiscoveryItem(discovery)
-            Spacer(modifier = Modifier.height(8.dp))
-        }
+        Spacer(modifier = Modifier.height(15.dp))
+
+        AnimalCarousel(
+            modifier = Modifier.fillMaxWidth(),
+            cardWidth = 250, // Cards menores
+            cardHeight = 380, // Altura reduzida
+            contentPadding = PaddingValues(horizontal = 8.dp), // Espaçamento horizontal
+            horizontalArrangement = Arrangement.spacedBy(8.dp) // Menor espaçamento entre os itens
+        )
     }
+
+
 }
 
-@Composable
-fun DiscoveryItem(discovery: Discovery) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { /* Ação ao clicar no item */ },
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = null,
-                modifier = Modifier.size(40.dp)
-            )
-            Column {
-                Text(
-                    text = discovery.name,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1B5E20)
-                )
-                Text(
-                    text = discovery.location,
-                    fontSize = 14.sp,
-                    color = Color(0xFF388E3C)
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun ResourcesSection() {
@@ -328,10 +299,12 @@ fun ResourcesSection() {
         Text(
             text = "Recursos",
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1B5E20)
+            fontWeight = FontWeight.SemiBold,
+            color = Color(0xFF35580C),
+            modifier = Modifier.offset(x = 15.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+
+        Spacer(modifier = Modifier.height(15.dp))
         resources.forEach { resource ->
             ResourceCard(resource)
             Spacer(modifier = Modifier.height(8.dp))
@@ -343,26 +316,32 @@ fun ResourcesSection() {
 fun ResourceCard(resource: Resource) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().padding(5.dp)
             .clickable { /* Ação ao clicar no card */ },
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White // Cor de fundo do card
+        ),
+        border = BorderStroke(
+            width = 1.dp, // Espessura da borda
+            color = Color.LightGray.copy(alpha = 0.5f) // Cor da borda com transparência
+        )
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(10.dp)) {
             Text(
                 text = resource.title,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1B5E20)
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Black
             )
             Text(
                 text = resource.description,
                 fontSize = 14.sp,
-                color = Color(0xFF388E3C)
+                color = Color.Gray
             )
         }
     }
 }
 
-data class Discovery(val name: String, val location: String)
+
 data class Resource(val title: String, val description: String)
