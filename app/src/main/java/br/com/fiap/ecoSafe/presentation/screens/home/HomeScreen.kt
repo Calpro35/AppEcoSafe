@@ -239,7 +239,7 @@ fun IdentifySpeciesButton() {
         Button(
             onClick = { /* Ação ao clicar no botão */ },
             modifier = Modifier.size(width = 380.dp, height = 58.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF417505)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF157A38)),
             shape = RoundedCornerShape(8.dp)
         ) {
             Icon(
