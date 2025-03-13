@@ -1,4 +1,4 @@
-package br.com.fiap.ecoSafe.presentation.componets
+package br.com.fiap.ecoSafe.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

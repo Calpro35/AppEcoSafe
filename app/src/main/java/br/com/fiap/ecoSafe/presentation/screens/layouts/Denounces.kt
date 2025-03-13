@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
-import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
+import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
 @Composable

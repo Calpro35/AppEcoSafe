@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
-import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
+import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
 @Composable

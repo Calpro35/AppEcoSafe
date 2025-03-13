@@ -1,24 +1,11 @@
 package br.com.fiap.ecoSafe.presentation.screens.layouts
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,14 +15,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.presentation.components.BannerWithMap
 import br.com.fiap.ecoSafe.presentation.components.Footer
-import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
+import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
+import br.com.fiap.ecoSafe.presentation.components.SearchBar
+
 import br.com.fiap.ecosafe.R
 
 @Composable
 fun Mapa(navController: NavController) {
-
-
     var isMenuOpen by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -47,8 +35,10 @@ fun Mapa(navController: NavController) {
         ) {
             item {
                 HeaderMap(onMenuClick = { isMenuOpen = true })
-                Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 MainMap()
+                FaunaLocalScreen()
+                Spacer(modifier = Modifier.height(24.dp))
 
             }
         }
@@ -63,6 +53,8 @@ fun Mapa(navController: NavController) {
                 }
             )
         }
+
+        // Footer
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -70,87 +62,63 @@ fun Mapa(navController: NavController) {
         ) {
             Footer(navController = navController)
         }
-
-
-
-
     }
 }
 
-
-
-
 @Composable
-fun HeaderMap(
-    onMenuClick: () -> Unit
-) {
+fun HeaderMap(onMenuClick: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Linha com o ícone do menu e o texto "Home"
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(0.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Texto "Home" centralizado
             Text(
                 text = "Mapa",
                 modifier = Modifier
-                    .weight(1f) // Ocupa o espaço restante e centraliza o texto
+                    .weight(1f)
                     .offset(x = 22.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF2D2A2A),
+                color = Color(0xFF2D2A2A)
+            )
 
-
-                )
-
-            // Ícone do menu hambúrguer (agora à direita)
             IconButton(
                 onClick = onMenuClick,
-                modifier = Modifier.size(48.dp) // Tamanho do ícone aumentado
+                modifier = Modifier.size(48.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.menu_ham),
                     contentDescription = "Abrir Menu",
-                    modifier = Modifier.size(32.dp) // Tamanho do ícone interno
+                    modifier = Modifier.size(32.dp)
                 )
             }
         }
-
-
-
     }
-
-
-
 }
 
 @Composable
 fun MainMap(modifier: Modifier = Modifier) {
-
-    Spacer(modifier = Modifier.height(10.dp))
-
     Column(
-        modifier = Modifier.fillMaxSize()
-    ){
-
-
-        //Conteudo da pagina
-
-
-
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        SearchBar {}
     }
-
-
 }
 
-
-
-
+@Composable
+fun FaunaLocalScreen() {
+    Column(modifier = Modifier.fillMaxSize()) {
+        BannerWithMap() // Para exibir um mapa
+    }
+}
 
 
