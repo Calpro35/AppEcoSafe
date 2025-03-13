@@ -1,16 +1,8 @@
 package br.com.fiap.ecoSafe.presentation.screens.layouts
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -31,14 +23,14 @@ import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
 import br.com.fiap.ecosafe.R
+import androidx.compose.foundation.layout.Arrangement
 
 @Composable
 fun EndangeredSpecies(navController: NavController) {
-
     var isMenuOpen by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Conteúdo principal da tela
+        // Main content
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -46,13 +38,12 @@ fun EndangeredSpecies(navController: NavController) {
         ) {
             item {
                 HeaderExtincion(onMenuClick = { isMenuOpen = true })
-                Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
-                MainExtincion()
-
+                Spacer(modifier = Modifier.height(24.dp))
+                //MainExtincion()
             }
         }
 
-        // Menu Hambúrguer
+        // Hamburger Menu
         if (isMenuOpen) {
             HamburgerMenu(
                 onCloseClick = { isMenuOpen = false },
@@ -62,7 +53,8 @@ fun EndangeredSpecies(navController: NavController) {
                 }
             )
         }
-       // Footer fixo na parte inferior
+
+        // Fixed Footer at the bottom
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -70,91 +62,88 @@ fun EndangeredSpecies(navController: NavController) {
         ) {
             Footer(navController = navController)
         }
-
-
     }
 }
 
-
-
-
 @Composable
-    fun HeaderExtincion(
-        onMenuClick: () -> Unit
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Linha com o ícone do menu e o texto "Home"
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Texto "Home" centralizado
-                Text(
-                    text = "Extinção",
-                    modifier = Modifier
-                        .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                        .offset(x = 22.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp,
-                    color = Color(0xFF2D2A2A),
-
-
-                    )
-
-                // Ícone do menu hambúrguer (agora à direita)
-                IconButton(
-                    onClick = onMenuClick,
-                    modifier = Modifier.size(48.dp) // Tamanho do ícone aumentado
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.menu_ham),
-                        contentDescription = "Abrir Menu",
-                        modifier = Modifier.size(32.dp) // Tamanho do ícone interno
-                    )
-                }
-            }
-
-
-
-        }
-
-
-
-}
-
-@Composable
-fun MainExtincion(modifier: Modifier = Modifier) {
-
-    Spacer(modifier = Modifier.height(15.dp))
-
+fun HeaderExtincion(onMenuClick: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize()
-    ){
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Extinção",
+                modifier = Modifier
+                    .weight(1f)
+                    .offset(x = 22.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.sp,
+                color = Color(0xFF2D2A2A),
+            )
 
-
-        //Conteudo da pagina
-
-
-
+            IconButton(
+                onClick = onMenuClick,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.menu_ham),
+                    contentDescription = "Abrir Menu",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        }
     }
-
-
 }
 
+//@Composable
+//fun MainExtincion() {
+//    val items = listOf("Animais", "Plantas", "Insetos")
+//    val searchItems = listOf(
+//        "Arefirme azul" to "Pau-brasil",
+//        "Borboleta-morama" to "Legnete azul",
+//        "Tigre-de-surníria" to "Ongaldes-ferdazina"
+//    )
+//
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(16.dp)
+//    ) {
+//        Text("Extinção", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+//        Spacer(modifier = Modifier.height(8.dp))
+//            items(items) { item ->
+//                Text(item, fontSize = 18.sp, modifier = Modifier.padding(vertical = 4.dp))
+//
+//        }
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Text("Pesquisar......", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+//        Spacer(modifier = Modifier.height(8.dp))
+//        searchItems.forEach { (first, second) ->
+//            Text(first, fontSize = 16.sp, modifier = Modifier.padding(vertical = 4.dp))
+//            Text(second, fontSize = 16.sp, modifier = Modifier.padding(vertical = 4.dp))
+//            Spacer(modifier = Modifier.height(8.dp))
+//        }
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+//            Text("Home", fontSize = 16.sp)
+//            Text("Mapa", fontSize = 16.sp)
+//            Text("Explorar", fontSize = 16.sp)
+//            Text("Extinção", fontSize = 16.sp)
+//            Text("Perfil", fontSize = 16.sp)
+//        }
+//    }
+//
+//
+//}
 
 
 
-
-
-
-
-
-
-
+//}
