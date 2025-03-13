@@ -24,13 +24,27 @@ class SpeciesRepository {
         )
     }
 
-    fun getAllSpecies(csvFilePath: String): List<Specie> {
-        val lines = File(csvFilePath).readLines()
+    fun getAllSpecies(context: Context): List<Specie> {
+        val inputStream = context.assets.open("fauna_ameacada_2021.txt")
+        val lines = inputStream.bufferedReader().use { it.readLines() }
+
         return lines
             .mapNotNull { line ->
                 val fields = line.split(";")
                 if (fields.size > 13) fromCsv(fields) else null
             }
+    }
+
+    fun getSpeciesByGroup(context: Context, group: String): List<Specie> {
+        val inputStream = context.assets.open("fauna_ameacada_2021.txt")
+        val lines = inputStream.bufferedReader().use { it.readLines() }
+
+        return lines
+            .mapNotNull { line ->
+                val fields = line.split(";")
+                if (fields.size > 13) fromCsv(fields) else null
+            }
+            .filter { it.grupoTaxonomico == group }
     }
 
     fun getSpecieByName(context: Context, specieName: String): Specie? {
@@ -43,6 +57,18 @@ class SpeciesRepository {
                 if (fields.size > 13) fromCsv(fields) else null
             }
             .find { it.especie.equals(specieName, ignoreCase = true) }
+    }
+
+    fun getMultipleSpecieByName(context: Context, specieName: String): List<Specie> {
+        val inputStream = context.assets.open("fauna_ameacada_2021.txt")
+        val lines = inputStream.bufferedReader().use { it.readLines() }
+
+        return lines
+            .mapNotNull { line ->
+                val fields = line.split(";")
+                if (fields.size > 13) fromCsv(fields) else null
+            }
+            .filter { it.especie.lineSequence().contains(specieName) }
     }
 
 }

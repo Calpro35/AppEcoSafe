@@ -4,11 +4,13 @@ import br.com.fiap.ecoSafe.data.model.ApiSpeciesLinkResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface SpeciesLinkService {
 
-    @GET("search?scientificname={scientific_name}&limit=1")
+    @GET("search")
     fun getSpecie(
-        @Path("scientific_name") scientificName: String
+        @Query("scientificname") scientificName: String,
+        @Query("limit") limit: Int = 1
     ): Call<ApiSpeciesLinkResponse>
 }

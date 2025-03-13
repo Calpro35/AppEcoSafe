@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.data.model
 
+import androidx.compose.runtime.MutableState
 import com.google.gson.annotations.SerializedName
 
 data class ApiTaxSisResponse(
