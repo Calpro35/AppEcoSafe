@@ -1,24 +1,12 @@
 package br.com.fiap.ecoSafe.presentation.screens.layouts
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,30 +17,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
-import br.com.fiap.ecoSafe.presentation.componets.HamburgerMenu
+import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
 import br.com.fiap.ecosafe.R
 
 @Composable
 fun EndangeredSpecies(navController: NavController) {
-
     var isMenuOpen by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Conteúdo principal da tela
+        // Main content
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 20.dp)
         ) {
             item {
-                HeaderExtincion(onMenuClick = { isMenuOpen = true })
-                Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
-                MainExtincion()
+                HeaderEndangered(
+                    onMenuClick = { isMenuOpen = true },
+                    BackClose = { navController.navigate("home_Screen")}
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                MainEndangered()
+                Spacer(modifier = Modifier.height(15.dp))
 
             }
         }
 
-        // Menu Hambúrguer
+        // Hamburger Menu
         if (isMenuOpen) {
             HamburgerMenu(
                 onCloseClick = { isMenuOpen = false },
@@ -62,7 +53,8 @@ fun EndangeredSpecies(navController: NavController) {
                 }
             )
         }
-       // Footer fixo na parte inferior
+
+        // Fixed Footer at the bottom
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -70,91 +62,74 @@ fun EndangeredSpecies(navController: NavController) {
         ) {
             Footer(navController = navController)
         }
-
-
     }
 }
 
 
-
-
 @Composable
-    fun HeaderExtincion(
-        onMenuClick: () -> Unit
+fun HeaderEndangered(
+    onMenuClick: () -> Unit,
+    BackClose: () -> Unit) {
+
+   Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Linha com o ícone do menu e o texto "Home"
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp),
-                verticalAlignment = Alignment.CenterVertically
+            // Ícone de voltar à esquerda
+
+            IconButton(
+                onClick = BackClose, // Ação ao clicar na seta de voltar
+                modifier = Modifier.size(48.dp) // Tamanho do ícone aumentado
             ) {
-                // Texto "Home" centralizado
-                Text(
-                    text = "Extinção",
-                    modifier = Modifier
-                        .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                        .offset(x = 22.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp,
-                    color = Color(0xFF2D2A2A),
-
-
-                    )
-
-                // Ícone do menu hambúrguer (agora à direita)
-                IconButton(
-                    onClick = onMenuClick,
-                    modifier = Modifier.size(48.dp) // Tamanho do ícone aumentado
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.menu_ham),
-                        contentDescription = "Abrir Menu",
-                        modifier = Modifier.size(32.dp) // Tamanho do ícone interno
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Default.Close, // Ícone de seta de voltar
+                    contentDescription = "Fechar",
+                    tint = Color.Black // Cor do ícone
+                )
             }
+            
+            
+            
+            
+            Text(
+                text = "Espécies Ameaçadas",
+                modifier = Modifier
+                    .weight(1f),
+                textAlign = TextAlign.Center,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.sp,
+                color = Color(0xFF2D2A2A),
+            )
 
-
-
+            IconButton(
+                onClick = onMenuClick,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.menu_ham),
+                    contentDescription = "Abrir Menu",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
-
-
-
+    }
 }
+
 
 @Composable
-fun MainExtincion(modifier: Modifier = Modifier) {
-
-    Spacer(modifier = Modifier.height(15.dp))
-
+fun MainEndangered() {
     Column(
-        modifier = Modifier.fillMaxSize()
-    ){
-
-
-        //Conteudo da pagina
-
-
-
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+       //conteudo da pagina aqui
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-

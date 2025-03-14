@@ -38,6 +38,11 @@ android {
     buildFeatures {
         compose = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion  = "1.4.3"
+    }
+
 }
 
 dependencies {
@@ -62,18 +67,29 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.converter.gson)
+
+    implementation ("androidx.compose.foundation:foundation:1.4.3") // Use a versão mais recente
 
     //depedências da API de tradução
-    implementation("com.fasterxml.jackson.core:jackson-core:2.15.3")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+    implementation(libs.jackson.core)
+    implementation(libs.jackson.databind)
 
     //Login e Cadastro
-    implementation("androidx.room:room-runtime:2.5.2")
-    annotationProcessor("androidx.room:room-compiler:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt("androidx.room:room-compiler:2.6.1")
 
-    //Evitar problemas para capturar URL
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    //google mapas APi
+    // Coil para carregar imagens de uma URL
+    implementation (libs.coil.compose)
+    implementation (libs.maps.compose)
+    implementation (libs.play.services.maps)
+    implementation (libs.ui)
+    implementation (libs.androidx.material)
+    implementation (libs.ui.tooling.preview)
+    implementation (libs.androidx.activity.compose.v130)
+    implementation (libs.maps.compose.v100)
+
 }

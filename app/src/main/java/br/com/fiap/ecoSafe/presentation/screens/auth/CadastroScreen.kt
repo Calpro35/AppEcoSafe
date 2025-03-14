@@ -2,7 +2,6 @@ package br.com.fiap.ecoSafe.presentation.screens.auth
 
 import CustomTextField
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -13,16 +12,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.data.model.User
 import br.com.fiap.ecoSafe.data.repository.UserRepository
-import br.com.fiap.ecoSafe.presentation.componets.GradientButton
-import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
-import br.com.fiap.ecoSafe.ui.theme.OpensSansFontFamily
+import br.com.fiap.ecoSafe.presentation.components.GradientButton
 import br.com.fiap.ecoSafe.ui.theme.RobotoFontFamily
 import br.com.fiap.ecosafe.R
 
