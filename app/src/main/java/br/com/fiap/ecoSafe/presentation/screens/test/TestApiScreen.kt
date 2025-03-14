@@ -78,7 +78,7 @@ fun TestApiScreen(navController: NavController, context: Context) {
 @Composable
 fun SpecieCard(specie: Specie){
     var clicked = remember { mutableFloatStateOf(0f) }
-    var specieSearched: MutableState<ApiSpeciesLinkResponse>? = null
+    var specieSearched = remember { mutableStateOf(SpecieMain())}
     var situation = ""
     if(specie.ew)
     {
@@ -110,8 +110,7 @@ fun SpecieCard(specie: Specie){
             getSpecieDetails(
                 specie, specieSearched
             )
-            println(specieSearched?.value.toString())
-            clicked.value = 1f
+            println(specieSearched.value.toString())
         }
     )
     {
@@ -126,7 +125,7 @@ fun SpecieCard(specie: Specie){
             )
             Text(
                 modifier = Modifier.alpha(1f),
-                text = "Reino: ${specieSearched?.value?.features?.get(0)?.properties?.kingdom }",
+                text = "Reino: ${specieSearched.value.kingdom}",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color.White
@@ -141,7 +140,7 @@ fun SpecieCard(specie: Specie){
         }
     }
 }
-
+/*
 
 fun fetchTaxon(sisId: Int?, taxonInfo: MutableState<ApiTaxSisResponse?>, onComplete: () -> Unit) {
     if (sisId == null) return
@@ -215,29 +214,59 @@ fun fetchPhylumData(phylum: String, phylumData: MutableState<ApiResponseAssessme
             onComplete()
         }
     })
-}
+}*/
 
-fun getSpecieDetails(specie: Specie, specieSearched: MutableState<ApiSpeciesLinkResponse>?) {
-    val call = RetrofitFactory.speciesLinkService.getSpecie(specie.especie
-        .replace(" ", "+"))
+fun getSpecieDetails(specie: Specie, specieSearched: MutableState<SpecieMain>) {
+    val call = RetrofitFactory.getSpeciesLinkService().getNewSpecie(specie.especie)
     call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
         override fun onResponse(
             call: Call<ApiSpeciesLinkResponse>,
             response: Response<ApiSpeciesLinkResponse>
         ) {
-            specieSearched?.value = response.body()!!
+            response.body()?.let{ newSpecie ->
+                specieSearched.value = newSpecie.features.get(0).properties
+            } ?: run {
+                println("Erro: resposta vazia do servidor!")
+            }
         }
         override fun onFailure(call: Call<ApiSpeciesLinkResponse>, t: Throwable) {
+            //TODO("Not yet implemented")
+            t.printStackTrace() // Mostra o erro no Logcat
         }
     })
 }
+/*
+fun getSpecieLinkDetails(specie: Specie, specieSearched: MutableState<SpecieMain>,
+                         onComplete: () -> Unit){
+    val call = RetrofitFactory.getSpeciesLinkService().getNewSpecie(specie.especie
+        .replace(" ", "+"))
+    call.enqueue(object : Callback<SpecieMain>{
+        //Resposta
+        override fun onResponse(
+            call: Call<Specie>,
+            response: Response<Specie>
+        ) {
+            //Atribuindo o corpo do retorno da chamada ao objeto
+            response.body()?.let{ especie ->
+                listaEnderecoState = listOf(endereco).toList()
+            } ?: run {
+                println("Erro: resposta vazia do servidor!")
+            }
+        }
 
+        override fun onFailure(call: Call<Endereco>, t: Throwable) {
+            //TODO("Not yet implemented")
+            t.printStackTrace() // Mostra o erro no Logcat
+        }
+
+    })
+}*/
+/*
 fun fetchSpeciesData(context: Context, commonName: String,
                      speciesData: MutableState<ApiSpeciesLinkResponse?>,
                      onComplete: () -> Unit){
     val specie = speciesRepository.getSpecieByName( context, commonName)
     if (specie != null) {
-        println(specie.especie)
         val call = RetrofitFactory.speciesLinkService.getSpecie(specie.especie)
         call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
             override fun onResponse(
@@ -254,4 +283,4 @@ fun fetchSpeciesData(context: Context, commonName: String,
             }
         })
     }
-}
+}*/

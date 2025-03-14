@@ -15,7 +15,7 @@ class ConsumoApi {
 
         return try {
             val response = client.newCall(request).execute()
-            response.body()?.string() ?: throw IOException("Resposta vazia")
+            response.body?.string() ?: throw IOException("Resposta vazia")
         } catch (e: IOException) {
             throw RuntimeException("Erro ao consumir API", e)
         }

@@ -73,4 +73,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.2")
     annotationProcessor("androidx.room:room-compiler:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
+
+    //Evitar problemas para capturar URL
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }

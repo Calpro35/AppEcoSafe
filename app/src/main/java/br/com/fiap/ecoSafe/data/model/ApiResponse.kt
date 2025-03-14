@@ -53,9 +53,22 @@ data class Description(
 )
 
 data class ApiSpeciesLinkResponse(
-    val features: List<Features>
-)
+    val features: Array<Feature>
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-data class Features(
+        other as ApiSpeciesLinkResponse
+
+        return features.contentEquals(other.features)
+    }
+
+    override fun hashCode(): Int {
+        return features.contentHashCode()
+    }
+}
+
+data class Feature(
     val properties: SpecieMain
 )
