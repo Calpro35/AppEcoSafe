@@ -11,6 +11,7 @@ import br.com.fiap.ecoSafe.presentation.screens.auth.LoginScreen
 import br.com.fiap.ecoSafe.presentation.screens.layouts.Denounces
 import br.com.fiap.ecoSafe.presentation.screens.layouts.EndangeredSpecies
 import br.com.fiap.ecoSafe.presentation.screens.layouts.Explore
+import br.com.fiap.ecoSafe.presentation.screens.layouts.Extinction
 import br.com.fiap.ecoSafe.presentation.screens.layouts.Mapa
 import br.com.fiap.ecoSafe.presentation.screens.layouts.Profile
 import br.com.fiap.ecoSafe.presentation.screens.layouts.RecentDiscoveries
@@ -26,7 +27,8 @@ sealed class Screen(val route: String) {
     object Forget : Screen("Forget_screen")
     object Home : Screen("home_screen")
     object RecentDiscoveries : Screen("descobertas_recentes")
-    object EndangeredSpecies : Screen("Extincao")
+    object EndangeredSpecies : Screen("Especies_ameacadas")
+    object Extinction : Screen("Extincao")
     object Denounces : Screen("denuncia")
     object Profile : Screen("perfil")
     object Setting : Screen("configuracao")
@@ -54,6 +56,7 @@ fun AppNavigation(navController: NavHostController) {
         composable(Screen.ThreatenedAreas.route) { ThreatenedAreas(navController) }
         composable(Screen.Explore.route) { Explore(navController) }
         composable(Screen.Mapa.route) { Mapa(navController) }
+        composable(Screen.Extinction.route){ Extinction(navController) }
 
         // Composable apenas para Testes do Back End
         composable(Screen.TestApi.route) { TestApiScreen(navController) }
