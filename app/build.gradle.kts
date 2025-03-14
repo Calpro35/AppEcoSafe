@@ -67,27 +67,29 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.converter.gson)
+
+    implementation ("androidx.compose.foundation:foundation:1.4.3") // Use a versão mais recente
 
     //depedências da API de tradução
-    implementation("com.fasterxml.jackson.core:jackson-core:2.15.3")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+    implementation(libs.jackson.core)
+    implementation(libs.jackson.databind)
 
     //Login e Cadastro
-    implementation("androidx.room:room-runtime:2.5.2")
-    annotationProcessor("androidx.room:room-compiler:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt("androidx.room:room-compiler:2.6.1")
 
     //google mapas APi
     // Coil para carregar imagens de uma URL
-    implementation ("io.coil-kt:coil-compose:2.2.2")
-    implementation ("com.google.maps.android:maps-compose:2.11.4")
-    implementation ("com.google.android.gms:play-services-maps:18.1.0")
-    implementation ("androidx.compose.ui:ui:1.0.0")
-    implementation ("androidx.compose.material:material:1.0.0")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.0.0")
-    implementation ("androidx.activity:activity-compose:1.3.0")
-    implementation ("com.google.maps.android:maps-compose:1.0.0")
+    implementation (libs.coil.compose)
+    implementation (libs.maps.compose)
+    implementation (libs.play.services.maps)
+    implementation (libs.ui)
+    implementation (libs.androidx.material)
+    implementation (libs.ui.tooling.preview)
+    implementation (libs.androidx.activity.compose.v130)
+    implementation (libs.maps.compose.v100)
 
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,7 @@ import br.com.fiap.ecoSafe.presentation.components.BannerWithMap
 import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
 import br.com.fiap.ecoSafe.presentation.components.SearchBar
+import br.com.fiap.ecoSafe.ui.theme.OpensSansFontFamily
 
 import br.com.fiap.ecosafe.R
 
@@ -116,8 +118,66 @@ fun MainMap(modifier: Modifier = Modifier) {
 
 @Composable
 fun FaunaLocalScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
         BannerWithMap() // Para exibir um mapa
+
+        Spacer(modifier = Modifier.height(16.dp))
+        // Títulos
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Text(
+                text = "Todos",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .offset(y = (-3).dp),
+                color = Color(0xFF35580C))
+            Text(
+                text = "Em Perigo",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2D2A2A))
+            Text(
+                text = "Vuneravel",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2D2A2A))
+
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        )
+        {
+            Text(
+                text ="Explore a biodiversidade em diferentes regiões do Brasil",
+                fontSize = 15.sp,
+                fontFamily = OpensSansFontFamily,
+                color = Color.Gray
+
+            )
+        }
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(
+            text = "Descobertas Recentes",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color(0xFF35580C),
+            modifier = Modifier.offset(x = 15.dp)
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+
+
+
+
+
     }
 }
 

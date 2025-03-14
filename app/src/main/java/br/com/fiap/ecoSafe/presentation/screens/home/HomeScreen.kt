@@ -263,7 +263,7 @@ fun RecentDiscoveriesSection() {
     Column {
         Text(
             text = "Descobertas Recentes",
-            fontSize = 20.sp,
+            fontSize = 19.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color(0xFF35580C),
             modifier = Modifier.offset(x = 15.dp)
@@ -294,7 +294,7 @@ fun ResourcesSection() {
     Column {
         Text(
             text = "Recursos",
-            fontSize = 20.sp,
+            fontSize = 19.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color(0xFF35580C),
             modifier = Modifier.offset(x = 15.dp)
