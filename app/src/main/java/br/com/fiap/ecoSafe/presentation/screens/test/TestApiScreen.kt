@@ -1,7 +1,6 @@
-package br.com.fiap.ecoSafe.ui.screens
+package br.com.fiap.ecoSafe.presentation.screens.test
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -58,12 +57,14 @@ fun TestApiScreen(navController: NavController, context: Context) {
         isLoading.value = false
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp), horizontalAlignment =
+    Alignment.CenterHorizontally) {
         if (isLoading.value) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
         } else {
-            Text(text = "Extinção")
-            //Text(text = speciesListState.value.toString())
+            Text(text = "Extinção", fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black)
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn {
                 items(speciesListState.value) { specie ->
@@ -77,7 +78,6 @@ fun TestApiScreen(navController: NavController, context: Context) {
 
 @Composable
 fun SpecieCard(specie: Specie){
-    var clicked = remember { mutableFloatStateOf(0f) }
     var specieSearched = remember { mutableStateOf(SpecieMain())}
     var situation = ""
     if(specie.ew)
@@ -110,7 +110,6 @@ fun SpecieCard(specie: Specie){
             getSpecieDetails(
                 specie, specieSearched
             )
-            println(specieSearched.value.toString())
         }
     )
     {
@@ -123,23 +122,83 @@ fun SpecieCard(specie: Specie){
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
-            Text(
-                modifier = Modifier.alpha(1f),
-                text = "Reino: ${specieSearched.value.kingdom}",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.White
-            )
-            Text(
-                modifier = Modifier.alpha(1f),
-                text = "Situação: $situation",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.White
-            )
+            if(specieSearched.value.kingdom.isNotEmpty()){
+                Text(
+                    modifier = Modifier.alpha(1f),
+                    text = "Reino: ${specieSearched.value.kingdom}",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier.alpha(1f),
+                    text = "Grupo Taxonômico: ${specie.grupoTaxonomico}",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier.alpha(1f),
+                    text = "Situação: $situation",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier.alpha(1f),
+                    text = "Família: ${specieSearched.value.family}",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+                Text(
+                    modifier = Modifier.alpha(1f),
+                    text = "Gênero: ${specieSearched.value.genus}",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+            }
+            else{
+                Text(
+                    modifier = Modifier.alpha(1f),
+                    text = "Clique para buscar",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+            }
         }
     }
 }
+
+fun getSpecieDetails(specie: Specie, specieSearched: MutableState<SpecieMain>) {
+    val call = RetrofitFactory.getSpeciesLinkService().getNewSpecie(specie.especie)
+    call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
+        override fun onResponse(
+            call: Call<ApiSpeciesLinkResponse>,
+            response: Response<ApiSpeciesLinkResponse>
+        ) {
+            response.body()?.let{ newSpecie ->
+                if(newSpecie.features.isNotEmpty()){
+                    specieSearched.value = newSpecie.features[0].properties
+                }
+                else{
+                    specieSearched.value = SpecieMain("Sem Dados Disponíveis",
+                        "Sem Dados Disponíveis", "Sem Dados Disponíveis",
+                        "Sem Dados Disponíveis", "Sem Dados Disponíveis")
+                }
+            } ?: run {
+                println("Erro: resposta vazia do servidor!")
+                return
+            }
+        }
+        override fun onFailure(call: Call<ApiSpeciesLinkResponse>, t: Throwable) {
+            t.printStackTrace()
+        }
+    })
+}
+
 /*
 
 fun fetchTaxon(sisId: Int?, taxonInfo: MutableState<ApiTaxSisResponse?>, onComplete: () -> Unit) {
@@ -214,73 +273,4 @@ fun fetchPhylumData(phylum: String, phylumData: MutableState<ApiResponseAssessme
             onComplete()
         }
     })
-}*/
-
-fun getSpecieDetails(specie: Specie, specieSearched: MutableState<SpecieMain>) {
-    val call = RetrofitFactory.getSpeciesLinkService().getNewSpecie(specie.especie)
-    call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
-        override fun onResponse(
-            call: Call<ApiSpeciesLinkResponse>,
-            response: Response<ApiSpeciesLinkResponse>
-        ) {
-            response.body()?.let{ newSpecie ->
-                specieSearched.value = newSpecie.features.get(0).properties
-            } ?: run {
-                println("Erro: resposta vazia do servidor!")
-            }
-        }
-        override fun onFailure(call: Call<ApiSpeciesLinkResponse>, t: Throwable) {
-            //TODO("Not yet implemented")
-            t.printStackTrace() // Mostra o erro no Logcat
-        }
-    })
-}
-/*
-fun getSpecieLinkDetails(specie: Specie, specieSearched: MutableState<SpecieMain>,
-                         onComplete: () -> Unit){
-    val call = RetrofitFactory.getSpeciesLinkService().getNewSpecie(specie.especie
-        .replace(" ", "+"))
-    call.enqueue(object : Callback<SpecieMain>{
-        //Resposta
-        override fun onResponse(
-            call: Call<Specie>,
-            response: Response<Specie>
-        ) {
-            //Atribuindo o corpo do retorno da chamada ao objeto
-            response.body()?.let{ especie ->
-                listaEnderecoState = listOf(endereco).toList()
-            } ?: run {
-                println("Erro: resposta vazia do servidor!")
-            }
-        }
-
-        override fun onFailure(call: Call<Endereco>, t: Throwable) {
-            //TODO("Not yet implemented")
-            t.printStackTrace() // Mostra o erro no Logcat
-        }
-
-    })
-}*/
-/*
-fun fetchSpeciesData(context: Context, commonName: String,
-                     speciesData: MutableState<ApiSpeciesLinkResponse?>,
-                     onComplete: () -> Unit){
-    val specie = speciesRepository.getSpecieByName( context, commonName)
-    if (specie != null) {
-        val call = RetrofitFactory.speciesLinkService.getSpecie(specie.especie)
-        call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
-            override fun onResponse(
-                call: Call<ApiSpeciesLinkResponse>,
-                response: Response<ApiSpeciesLinkResponse>
-            ) {
-                speciesData.value = response.body()
-                println(speciesData.value?.features?.get(0)?.properties?.kingdom)
-                onComplete()
-            }
-
-            override fun onFailure(call: Call<ApiSpeciesLinkResponse>, t: Throwable) {
-                onComplete()
-            }
-        })
-    }
 }*/

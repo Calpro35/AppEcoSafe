@@ -17,8 +17,8 @@ import br.com.fiap.ecoSafe.presentation.screens.layouts.Profile
 import br.com.fiap.ecoSafe.presentation.screens.layouts.RecentDiscoveries
 import br.com.fiap.ecoSafe.presentation.screens.layouts.Setting
 import br.com.fiap.ecoSafe.presentation.screens.layouts.ThreatenedAreas
+import br.com.fiap.ecoSafe.presentation.screens.test.TestApiScreen
 import br.com.fiap.ecoSafe.presentation.splash.SplashActivity
-import br.com.fiap.ecoSafe.ui.screens.TestApiScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash_screen")
