@@ -43,14 +43,14 @@ sealed class Screen(val route: String) {
 
 @Composable
 fun AppNavigation(navController: NavHostController, context: Context) {
-    NavHost(navController = navController, startDestination = Screen.TestApi.route) {
+    NavHost(navController = navController, startDestination = Screen.Splash.route) {
         composable(Screen.Splash.route) { SplashActivity(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Cadastro.route) { CadastroScreen(navController) }
         composable(Screen.Forget.route) { ForgetScreen(navController) }
         composable(Screen.Home.route) { HomeScreen(navController) }
         composable(Screen.RecentDiscoveries.route) { RecentDiscoveries(navController) }
-        composable(Screen.EndangeredSpecies.route) { EndangeredSpecies(navController) }
+        composable(Screen.EndangeredSpecies.route) { EndangeredSpecies(navController, context) }
         composable(Screen.Denounces.route) { Denounces(navController) }
         composable(Screen.Profile.route) { Profile(navController) }
         composable(Screen.Setting.route) { Setting(navController) }

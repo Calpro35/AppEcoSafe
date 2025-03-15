@@ -81,6 +81,9 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     kapt("androidx.room:room-compiler:2.6.1")
 
+    //Evitar problemas para capturar URL
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
     //google mapas APi
     // Coil para carregar imagens de uma URL
     implementation (libs.coil.compose)

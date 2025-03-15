@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.data.service.RetrofitFactory
 import br.com.fiap.ecoSafe.data.model.*
 import br.com.fiap.ecoSafe.data.repository.SpeciesRepository
+import br.com.fiap.ecoSafe.presentation.screens.layouts.SpecieCard
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,129 +75,6 @@ fun TestApiScreen(navController: NavController, context: Context) {
             }
         }
     }
-}
-
-@Composable
-fun SpecieCard(specie: Specie){
-    var specieSearched = remember { mutableStateOf(SpecieMain())}
-    var situation = ""
-    if(specie.ew)
-    {
-        situation = "Extinta na Natureza"
-    }
-    else if(specie.cr)
-    {
-        situation = "Criticamente em Perigo"
-    }
-    else if(specie.en)
-    {
-        situation = "Em Perigo"
-    }
-    else if(specie.vu)
-    {
-        situation = "Vulnerável"
-    }
-    else if(specie.re)
-    {
-        situation = "Extinta no Brasil"
-    }
-    else if(specie.ex)
-    {
-        situation = "Extinta"
-    }
-    Card(colors = CardDefaults.cardColors(Color.DarkGray),
-        modifier = Modifier.padding(bottom = 8.dp),
-        onClick = {
-            getSpecieDetails(
-                specie, specieSearched
-            )
-        }
-    )
-    {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)) {
-            Text(
-                text = "Espécie: ${specie.especie}",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-            if(specieSearched.value.kingdom.isNotEmpty()){
-                Text(
-                    modifier = Modifier.alpha(1f),
-                    text = "Reino: ${specieSearched.value.kingdom}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-                Text(
-                    modifier = Modifier.alpha(1f),
-                    text = "Grupo Taxonômico: ${specie.grupoTaxonomico}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-                Text(
-                    modifier = Modifier.alpha(1f),
-                    text = "Situação: $situation",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-                Text(
-                    modifier = Modifier.alpha(1f),
-                    text = "Família: ${specieSearched.value.family}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-                Text(
-                    modifier = Modifier.alpha(1f),
-                    text = "Gênero: ${specieSearched.value.genus}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-            }
-            else{
-                Text(
-                    modifier = Modifier.alpha(1f),
-                    text = "Clique para buscar",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White
-                )
-            }
-        }
-    }
-}
-
-fun getSpecieDetails(specie: Specie, specieSearched: MutableState<SpecieMain>) {
-    val call = RetrofitFactory.getSpeciesLinkService().getNewSpecie(specie.especie)
-    call.enqueue(object : Callback<ApiSpeciesLinkResponse> {
-        override fun onResponse(
-            call: Call<ApiSpeciesLinkResponse>,
-            response: Response<ApiSpeciesLinkResponse>
-        ) {
-            response.body()?.let{ newSpecie ->
-                if(newSpecie.features.isNotEmpty()){
-                    specieSearched.value = newSpecie.features[0].properties
-                }
-                else{
-                    specieSearched.value = SpecieMain("Sem Dados Disponíveis",
-                        "Sem Dados Disponíveis", "Sem Dados Disponíveis",
-                        "Sem Dados Disponíveis", "Sem Dados Disponíveis")
-                }
-            } ?: run {
-                println("Erro: resposta vazia do servidor!")
-                return
-            }
-        }
-        override fun onFailure(call: Call<ApiSpeciesLinkResponse>, t: Throwable) {
-            t.printStackTrace()
-        }
-    })
 }
 
 /*
