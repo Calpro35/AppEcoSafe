@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -28,7 +29,9 @@ fun CadastroScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    //Obtendo a instância do repositório
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    var isConfirmPasswordVisible by remember { mutableStateOf(false) }
+
     val context = LocalContext.current
     val userRepository = UserRepository(context)
 
@@ -37,7 +40,6 @@ fun CadastroScreen(navController: NavController) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Ícone de voltar no topo da tela
         IconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier.align(Alignment.Start)
@@ -51,7 +53,6 @@ fun CadastroScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Título "Cadastro"
         Text(
             text = "Cadastro",
             fontSize = 28.sp,
@@ -67,12 +68,10 @@ fun CadastroScreen(navController: NavController) {
             value = name,
             onValueChange = { name = it },
             label = "Nome",
-            placeholder = "Digite seu nome completo",
-
-            )
+            placeholder = "Digite seu nome completo"
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
-
 
         CustomTextField(
             value = email,
@@ -86,9 +85,7 @@ fun CadastroScreen(navController: NavController) {
                     tint = Color.Gray
                 )
             }
-
         )
-
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -98,13 +95,19 @@ fun CadastroScreen(navController: NavController) {
             label = "Senha",
             placeholder = "Digite sua senha",
             trailIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.visibility_off),
-                    contentDescription = "Senha",
-                    tint = Color.Gray
-                )
+                IconButton(
+                    onClick = { isPasswordVisible = !isPasswordVisible }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            if (isPasswordVisible) R.drawable.visibility_on else R.drawable.visibility_off
+                        ),
+                        contentDescription = if (isPasswordVisible) "Ocultar senha" else "Mostrar senha",
+                        tint = Color.Gray
+                    )
+                }
             },
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -115,20 +118,23 @@ fun CadastroScreen(navController: NavController) {
             label = "Confirma Senha",
             placeholder = "Digite Novamente",
             trailIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.visibility_off),
-                    contentDescription = "Senha",
-                    tint = Color.Gray
-                )
+                IconButton(
+                    onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            if (isConfirmPasswordVisible) R.drawable.visibility_on else R.drawable.visibility_off
+                        ),
+                        contentDescription = if (isConfirmPasswordVisible) "Ocultar senha" else "Mostrar senha",
+                        tint = Color.Gray
+                    )
+                }
             },
-            visualTransformation = PasswordVisualTransformation(),
-
-            )
-
+            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
+        )
 
         Spacer(modifier = Modifier.height(35.dp))
 
-        // Botão de Login com Gradiente
         GradientButton(
             text = "Cadastrar",
             onClick = {
@@ -139,15 +145,12 @@ fun CadastroScreen(navController: NavController) {
                 ) {
                     val user = User(0L, name, email, password)
                     userRepository.salvar(user)
-                    // Navegar para a próxima tela ou realizar o cadastro
                     navController.navigate("login_screen")
                 } else {
-                    // Mostrar erro de senha não coincidente
                     println("As senhas não coincidem!")
                 }
             }
         )
-
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -162,9 +165,5 @@ fun CadastroScreen(navController: NavController) {
                 color = Color.Gray
             )
         }
-
-
     }
-
 }
-
