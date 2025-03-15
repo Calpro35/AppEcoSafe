@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,17 +15,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            EcoSafeApp()
+            EcoSafeApp(this)
         }
     }
 }
 
 @Composable
-fun EcoSafeApp() {
+fun EcoSafeApp(context: Context) {
     EcoSafeTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             val navController = rememberNavController()
-            AppNavigation(navController)
+            AppNavigation(navController, context)
         }
     }
 }

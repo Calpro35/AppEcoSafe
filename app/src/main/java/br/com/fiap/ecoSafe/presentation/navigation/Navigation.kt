@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.presentation.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,8 +18,8 @@ import br.com.fiap.ecoSafe.presentation.screens.layouts.Profile
 import br.com.fiap.ecoSafe.presentation.screens.layouts.RecentDiscoveries
 import br.com.fiap.ecoSafe.presentation.screens.layouts.Setting
 import br.com.fiap.ecoSafe.presentation.screens.layouts.ThreatenedAreas
+import br.com.fiap.ecoSafe.presentation.screens.test.TestApiScreen
 import br.com.fiap.ecoSafe.presentation.splash.SplashActivity
-import br.com.fiap.ecoSafe.ui.screens.TestApiScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash_screen")
@@ -41,7 +42,7 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(navController: NavHostController, context: Context) {
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
         composable(Screen.Splash.route) { SplashActivity(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
@@ -49,7 +50,7 @@ fun AppNavigation(navController: NavHostController) {
         composable(Screen.Forget.route) { ForgetScreen(navController) }
         composable(Screen.Home.route) { HomeScreen(navController) }
         composable(Screen.RecentDiscoveries.route) { RecentDiscoveries(navController) }
-        composable(Screen.EndangeredSpecies.route) { EndangeredSpecies(navController) }
+        composable(Screen.EndangeredSpecies.route) { EndangeredSpecies(navController, context) }
         composable(Screen.Denounces.route) { Denounces(navController) }
         composable(Screen.Profile.route) { Profile(navController) }
         composable(Screen.Setting.route) { Setting(navController) }
@@ -59,6 +60,6 @@ fun AppNavigation(navController: NavHostController) {
         composable(Screen.Extinction.route){ Extinction(navController) }
 
         // Composable apenas para Testes do Back End
-        composable(Screen.TestApi.route) { TestApiScreen(navController) }
+        composable(Screen.TestApi.route) { TestApiScreen(navController, context) }
     }
 }

@@ -1,142 +1,83 @@
-package br.com.fiap.ecoSafe.ui.screens
+package br.com.fiap.ecoSafe.presentation.screens.test
 
-import android.util.Log
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.data.service.RetrofitFactory
 import br.com.fiap.ecoSafe.data.model.*
-import br.com.fiap.ecoSafe.data.service.traducao.ConsultaMyMemory.obterTraducao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import br.com.fiap.ecoSafe.data.repository.SpeciesRepository
+import br.com.fiap.ecoSafe.presentation.screens.layouts.SpecieCard
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+val speciesRepository = SpeciesRepository()
+
 @Composable
-fun TestApiScreen(navController: NavController) {
+fun TestApiScreen(navController: NavController, context: Context) {
     val taxonInfo = remember { mutableStateOf<ApiTaxSisResponse?>(null) }
     val kingdoms = remember { mutableStateOf<List<String>?>(null) }
     val kingdomData = remember { mutableStateOf<ApiResponseAssessment?>(null) }
     val phylums = remember { mutableStateOf<List<String>?>(null) }
     val phylumData = remember { mutableStateOf<ApiResponseAssessment?>(null) }
+    val specieData = remember { mutableStateOf<ApiSpeciesLinkResponse?>(null) }
     val isLoading = remember { mutableStateOf(false) }
 
     var sisId by remember { mutableStateOf("") }
     var kingdom by remember { mutableStateOf("") }
     var phylum by remember { mutableStateOf("") }
+    var commonName = remember { mutableStateOf("") }
+    var specie by remember {
+        mutableStateOf(
+            Specie(
+                "", "", "",
+                "", "",
+                "", "", false, false, false,
+                false, false, false
+            )
+        )
+    }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item {
-                OutlinedTextField(
-                    value = sisId,
-                    onValueChange = { sisId = it },
-                    label = { Text("ID do Taxon (sis_id)") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Button(
-                    onClick = {
-                        isLoading.value = true
-                        fetchTaxon(sisId.toIntOrNull(), taxonInfo) { isLoading.value = false }
-                    },
-                    enabled = sisId.isNotBlank()
-                ) {
-                    Text("Buscar Taxon")
-                }
+    val speciesListState = remember { mutableStateOf<List<Specie>>(emptyList()) }
 
-                Spacer(modifier = Modifier.height(16.dp))
+    LaunchedEffect(Unit) {
+        isLoading.value = true
+        val species = speciesRepository.getAllSpecies(context)
+        speciesListState.value = species
+        isLoading.value = false
+    }
 
-                Button(
-                    onClick = {
-                        isLoading.value = true
-                        fetchAllKingdoms(kingdoms) { isLoading.value = false }
-                    }
-                ) {
-                    Text("Buscar Todos os Reinos")
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                OutlinedTextField(
-                    value = kingdom,
-                    onValueChange = { kingdom = it },
-                    label = { Text("Nome do Reino") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Button(
-                    onClick = {
-                        isLoading.value = true
-                        fetchKingdomData(kingdom, kingdomData) { isLoading.value = false }
-                    },
-                    enabled = kingdom.isNotBlank()
-                ) {
-                    Text("Buscar Dados do Reino")
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    onClick = {
-                        isLoading.value = true
-                        fetchAllPhylums(phylums) { isLoading.value = false }
-                    }
-                ) {
-                    Text("Buscar Todos os Filos")
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                OutlinedTextField(
-                    value = phylum,
-                    onValueChange = { phylum = it },
-                    label = { Text("Nome do Filo") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Button(
-                    onClick = {
-                        isLoading.value = true
-                        fetchPhylumData(phylum, phylumData) { isLoading.value = false }
-                    },
-                    enabled = phylum.isNotBlank()
-                ) {
-                    Text("Buscar Dados do Filo")
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                if (isLoading.value) {
-                    CircularProgressIndicator()
-                }
-
-                taxonInfo.value?.let { taxon ->
-                    Text("Taxon encontrado: ${taxon.taxon.scientificName}")
-                }
-
-                kingdoms.value?.let {
-                    Text("Reinos disponíveis: ${it.joinToString(", ")}")
-                }
-
-                kingdomData.value?.let {
-                    Text("Reino $kingdom possui ${it.assessments.size} avaliações.")
-                }
-
-                phylums.value?.let {
-                    Text("Filos disponíveis: ${it.joinToString(", ")}")
-                }
-
-                phylumData.value?.let {
-                    Text("Filo $phylum possui ${it.assessments.size} avaliações.")
+    Column(modifier = Modifier.padding(16.dp), horizontalAlignment =
+    Alignment.CenterHorizontally) {
+        if (isLoading.value) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+        } else {
+            Text(text = "Extinção", fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black)
+            Spacer(modifier = Modifier.height(10.dp))
+            LazyColumn {
+                items(speciesListState.value) { specie ->
+                    SpecieCard(specie)
+                    Spacer(modifier = Modifier.height(5.dp))
                 }
             }
         }
     }
 }
+
+/*
 
 fun fetchTaxon(sisId: Int?, taxonInfo: MutableState<ApiTaxSisResponse?>, onComplete: () -> Unit) {
     if (sisId == null) return
@@ -210,4 +151,4 @@ fun fetchPhylumData(phylum: String, phylumData: MutableState<ApiResponseAssessme
             onComplete()
         }
     })
-}
+}*/

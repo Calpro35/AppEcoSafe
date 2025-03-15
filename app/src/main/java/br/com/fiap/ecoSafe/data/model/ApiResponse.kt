@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.data.model
 
+import androidx.compose.runtime.MutableState
 import com.google.gson.annotations.SerializedName
 
 data class ApiTaxSisResponse(
@@ -49,4 +50,25 @@ data class Scope(
 
 data class Description(
     @SerializedName("en") val en: String
+)
+
+data class ApiSpeciesLinkResponse(
+    val features: Array<Feature>
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ApiSpeciesLinkResponse
+
+        return features.contentEquals(other.features)
+    }
+
+    override fun hashCode(): Int {
+        return features.contentHashCode()
+    }
+}
+
+data class Feature(
+    val properties: SpecieMain
 )

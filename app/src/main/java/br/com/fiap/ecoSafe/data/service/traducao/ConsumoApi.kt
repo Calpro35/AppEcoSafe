@@ -16,7 +16,6 @@ class ConsumoApi {
         return try {
             val response = client.newCall(request).execute()
             response.body?.string() ?: throw IOException("Resposta vazia")
-           // response.body()?.string() ?: throw IOException("Resposta vazia") esta comentei carlos para usar a api do gogole maps
         } catch (e: IOException) {
             throw RuntimeException("Erro ao consumir API", e)
         }

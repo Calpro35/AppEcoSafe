@@ -1,7 +1,7 @@
 package br.com.fiap.ecoSafe.data.model
 
 data class Specie(
-    val id: Int,
+    val id: String,
     val grupoTaxonomico: String,
     val ordem: String,
     val familia: String,
