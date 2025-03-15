@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +29,8 @@ fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rememberMe by remember { mutableStateOf(false) }
-    //Obtendo a instância do repositório
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
     val context = LocalContext.current
     val userRepository = UserRepository(context)
 
@@ -46,10 +48,11 @@ fun LoginScreen(navController: NavController) {
             fontWeight = FontWeight.Bold,
             fontFamily = RobotoFontFamily,
             color = Color.Black,
-            modifier = Modifier.fillMaxWidth() // Ocupa toda a largura disponível
-            .padding(start = 0.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 0.dp),
             letterSpacing = 1.sp,
-            textAlign = TextAlign.Start // Alinha o texto à direita
+            textAlign = TextAlign.Start
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -60,8 +63,8 @@ fun LoginScreen(navController: NavController) {
             fontSize = 14.sp,
             color = Color.Gray,
             modifier = Modifier.fillMaxWidth(),
-            letterSpacing = 1.sp,// Ocupa toda a largura disponível
-            textAlign = TextAlign.Start // Alinha o texto à direita
+            letterSpacing = 1.sp,
+            textAlign = TextAlign.Start
         )
 
         Spacer(modifier = Modifier.height(45.dp))
@@ -78,12 +81,8 @@ fun LoginScreen(navController: NavController) {
                     contentDescription = "Email",
                     tint = Color.Gray
                 )
-
             }
-
         )
-
-       // Spacer(modifier = Modifier.height(10.dp))
 
         // Campo de Senha
         CustomTextField(
@@ -92,20 +91,24 @@ fun LoginScreen(navController: NavController) {
             label = "Senha",
             placeholder = "Digite sua senha",
             trailIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.visibility_off),
-                    contentDescription = "Senha",
-                    tint = Color.Gray
-                )
+                IconButton(
+                    onClick = { isPasswordVisible = !isPasswordVisible }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            if (isPasswordVisible) R.drawable.visibility_on else R.drawable.visibility_off
+                        ),
+                        contentDescription = if (isPasswordVisible) "Ocultar senha" else "Mostrar senha",
+                        tint = Color.Gray
+                    )
+                }
             },
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
-
-       // Spacer(modifier = Modifier.height(16.dp))
 
         // Checkbox "Manter-me Conectado"
         Row(
-            verticalAlignment = Alignment.CenterVertically, // Alinha os itens verticalmente no centro
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
             Checkbox(
@@ -115,27 +118,26 @@ fun LoginScreen(navController: NavController) {
                     checkedColor = Color.Blue,
                     uncheckedColor = Color.Gray
                 ),
-                modifier = Modifier.padding(0.dp) // Remove o padding interno do Checkbox
+                modifier = Modifier.padding(0.dp)
             )
             Text(
                 text = "manter-me Conectado",
                 fontSize = 13.sp,
-                color = Color.Gray,
-               // modifier = Modifier.padding(end = 5.dp) // Margem mínima entre o Checkbox e o Texto
+                color = Color.Gray
             )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
         // Botão de Login com Gradiente
-        GradientButton (
+        GradientButton(
             text = "Login",
             onClick = {
-                if(!email.equals("") && email.contains("@") && email.contains(".com")
-                    && !password.equals("")){
-                       if(userRepository.verificarLogin(email, password)){
-                           navController.navigate("home_screen")
-                       }
+                if (!email.equals("") && email.contains("@") && email.contains(".com")
+                    && !password.equals("")) {
+                    if (userRepository.verificarLogin(email, password)) {
+                        navController.navigate("home_screen")
+                    }
                 }
             }
         )
@@ -144,7 +146,7 @@ fun LoginScreen(navController: NavController) {
 
         // Link "Esqueceu a senha?"
         TextButton(
-            onClick = { navController.navigate(Screen.Forget.route)},
+            onClick = { navController.navigate(Screen.Forget.route) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
@@ -155,7 +157,6 @@ fun LoginScreen(navController: NavController) {
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-
 
         Text(
             text = "Não tem uma conta? Sign Up",
@@ -177,7 +178,7 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Botão de Login com Google
-        SocialButton (
+        SocialButton(
             text = "Sign in with Google",
             icon = R.drawable.ic_google,
             onClick = { /* Ação para login com Google */ }
@@ -193,6 +194,3 @@ fun LoginScreen(navController: NavController) {
         )
     }
 }
-
-
-
