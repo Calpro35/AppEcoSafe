@@ -20,6 +20,7 @@ import br.com.fiap.ecoSafe.presentation.screens.layouts.Setting
 import br.com.fiap.ecoSafe.presentation.screens.layouts.ThreatenedAreas
 import br.com.fiap.ecoSafe.presentation.screens.test.TestApiScreen
 import br.com.fiap.ecoSafe.presentation.splash.SplashActivity
+import br.com.fiap.ecoSafe.presentation.screens.home.CameraScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash_screen")
@@ -36,6 +37,7 @@ sealed class Screen(val route: String) {
     object ThreatenedAreas : Screen("areas_ameacadas")
     object Explore : Screen("camera")
     object Mapa : Screen("mapa")
+    object Camera : Screen("camera_screen") // Nova rota para a tela de câmera
 
     // Objeto usado para testes do Back-End
     object TestApi : Screen("teste")
@@ -57,7 +59,8 @@ fun AppNavigation(navController: NavHostController, context: Context) {
         composable(Screen.ThreatenedAreas.route) { ThreatenedAreas(navController) }
         composable(Screen.Explore.route) { Explore(navController) }
         composable(Screen.Mapa.route) { Mapa(navController) }
-        composable(Screen.Extinction.route){ Extinction(navController) }
+        composable(Screen.Extinction.route) { Extinction(navController) }
+        composable(Screen.Camera.route) { CameraScreen(onBackClick = { navController.popBackStack() }) } // Nova tela de câmera
 
         // Composable apenas para Testes do Back End
         composable(Screen.TestApi.route) { TestApiScreen(navController, context) }
