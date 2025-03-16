@@ -116,14 +116,17 @@ fun LoginScreen(navController: NavController) {
                 onCheckedChange = { rememberMe = it },
                 colors = CheckboxDefaults.colors(
                     checkedColor = Color.Blue,
-                    uncheckedColor = Color.Gray
+                    uncheckedColor = Color.Gray,
+
                 ),
-                modifier = Modifier.padding(0.dp)
+                modifier = Modifier.
+                offset(x = (-7).dp)
             )
             Text(
                 text = "manter-me Conectado",
                 fontSize = 13.sp,
-                color = Color.Gray
+                color = Color.Gray,
+                modifier = Modifier.offset(x = (-14).dp)
             )
         }
 
@@ -167,13 +170,36 @@ fun LoginScreen(navController: NavController) {
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+          Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp, vertical = 16.dp), // Ajuste o padding conforme necessário
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Traço à esquerda
+            HorizontalDivider(
+                modifier = Modifier
+                    .weight(1f) // Ocupa o espaço disponível
+                    .height(1.dp), // Altura do traço
+                color = Color(0xFFE8E8E8) // Cor do traço
+            )
 
-        Text(
-            text = "Ou",
-            fontSize = 14.sp,
-            color = Color.Gray
-        )
+            // Texto "Ou"
+            Text(
+                text = "Ou",
+                fontSize = 14.sp,
+                color = Color.Gray,
+                modifier = Modifier.padding(horizontal = 8.dp) // Espaço entre o texto e os traços
+            )
+
+            // Traço à direita
+            HorizontalDivider(
+                modifier = Modifier
+                    .weight(1f) // Ocupa o espaço disponível
+                    .height(1.dp), // Altura do traço
+                color = Color(0xffE8E8E8)// Cor do traço
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 

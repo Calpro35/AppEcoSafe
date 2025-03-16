@@ -45,7 +45,7 @@ fun HomeScreen(navController: NavController) {
                 })
                 Spacer(modifier = Modifier.height(30.dp))
                 RecentDiscoveriesSection()
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(15.dp))
                 ResourcesSection()
             }
         }
@@ -148,13 +148,13 @@ fun HeaderSection(
         }
 
         // Reduzir o espaço abaixo do banner
-        Spacer(modifier = Modifier.height(5.dp)) // Espaço reduzido
+        Spacer(modifier = Modifier.height(9.dp)) // Espaço reduzido
 
         // Textos abaixo do banner
         Text(
             text = "O Meio Ambiente Conectado com Você",
             fontSize = 16.sp,
-            letterSpacing = 0.5.sp,
+            letterSpacing = 0.9.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = InterFontFamily,
             color = Color.Gray,
@@ -178,7 +178,7 @@ fun StatisticsSection() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(13.dp),
+            .padding(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Primeira linha com dois banners lado a lado
@@ -271,10 +271,13 @@ fun RecentDiscoveriesSection() {
 
         AnimalCarousel(
             modifier = Modifier.fillMaxWidth(),
-            cardWidth = 250, // Cards menores
-            cardHeight = 380, // Altura reduzida
-            contentPadding = PaddingValues(horizontal = 8.dp), // Espaçamento horizontal
-            horizontalArrangement = Arrangement.spacedBy(8.dp) // Menor espaçamento entre os itens
+            cardWidth = 200, // Cards menores
+            cardHeight = 350, // Altura reduzida
+            contentPadding = PaddingValues(horizontal = 7.dp), // Espaçamento horizontal
+            horizontalArrangement = Arrangement.spacedBy(12.dp),// Menor espaçamento entre os itens
+            imageCard = 150,
+            iconId = R.drawable.location_map
+
         )
     }
 }

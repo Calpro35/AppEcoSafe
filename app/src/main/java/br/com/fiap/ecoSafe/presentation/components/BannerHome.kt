@@ -1,11 +1,13 @@
 package br.com.fiap.ecoSafe.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,14 +32,21 @@ fun BannerItem(
     modifier: Modifier = Modifier
         .width(150.dp)
         .height(90.dp)
+
 ) {
     Box(
         modifier = modifier
-            .background(Color(0xFFF4F4F4), shape = RoundedCornerShape(8.dp))
-            //.border(width = )
+            .background(Color(250, 250, 250, 255), shape = RoundedCornerShape(13.dp))
+            .border(
+                width = 1.dp,
+                color = Color.LightGray,
+                shape = RoundedCornerShape(13.dp)
+
+            )
             .clickable { onClick() }
             .zIndex(2f), // Adiciona um pequeno shadow (pode ser ajustado)
             //.padding(8.dp),
+
         contentAlignment = Alignment.Center
     ) {
         Column (
@@ -65,7 +74,8 @@ fun BannerItem(
                 text = text,
                 fontSize = 14.sp,
                 color = Color.Gray,
-                letterSpacing = 1.sp
+                letterSpacing = 1.sp,
+                modifier = Modifier.offset(y = (-5.dp))
             )
         }
     }

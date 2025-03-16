@@ -40,9 +40,9 @@ fun SplashActivity(navController: NavController) {
             painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = "Logo",
             modifier = Modifier
-                .size(170.dp)
+                .size(155.dp)
                 .aspectRatio(1f) // Mantém a proporção (quadrado)
-                .offset(x = 7.dp, y = 5.dp)
+                .offset(x = 6.dp, y = (-27).dp)
         )
 
 
