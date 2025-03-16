@@ -86,7 +86,7 @@ fun HeaderMap(onMenuClick: () -> Unit) {
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF2D2A2A)
+                color = Color(0xFF35580C)
             )
 
             IconButton(

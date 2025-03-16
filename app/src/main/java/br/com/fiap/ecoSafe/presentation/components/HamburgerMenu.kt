@@ -35,7 +35,7 @@ fun HamburgerMenu(onCloseClick: () -> Unit, onItemClick: (String) -> Unit) {
     val menuItems = listOf(
         MenuItem("Home", Screen.Home.route, R.drawable.home_ham),
         MenuItem("Descobertas Recentes", Screen.RecentDiscoveries.route, R.drawable.search_ham),
-        MenuItem("Explorar", Screen.Explore.route, R.drawable.camera_ham),
+        MenuItem("Explorar", Screen.Camera.route, R.drawable.camera_ham),
         MenuItem("Áreas Ameaçadas", Screen.ThreatenedAreas.route, R.drawable.map_ham),
         MenuItem("Espécies Ameaçadas", Screen.EndangeredSpecies.route, R.drawable.book_ham),
         MenuItem("Denúncias", Screen.Denounces.route, R.drawable.hand_ham),

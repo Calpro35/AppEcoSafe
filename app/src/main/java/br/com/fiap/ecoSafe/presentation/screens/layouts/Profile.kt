@@ -83,7 +83,7 @@ fun HeaderProfile(onMenuClick: () -> Unit) {
                 fontSize = 18.sp,
                 letterSpacing = 1.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF2D2A2A),
+                color = Color(0xFF35580C),
             )
 
             // Ícone do menu hambúrguer (agora à direita)

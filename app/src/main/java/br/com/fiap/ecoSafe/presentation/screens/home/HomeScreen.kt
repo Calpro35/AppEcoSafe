@@ -92,11 +92,11 @@ fun HeaderSection(
                 text = "Home",
                 modifier = Modifier
                     .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                    .offset(x = 22.dp, y = 4.dp),
+                    .offset(x = 19.dp, y = 4.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF2D2A2A),
+                color = Color(0xFF35580C),
             )
 
             // Ícone do menu hambúrguer (agora à direita)
