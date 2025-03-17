@@ -30,9 +30,9 @@ fun Footer(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(61.dp)
+            .height(60.dp)
             .background(Color.White)
-            .border(width = 0.2.dp, color = Color(0xFFC0B4B4)) // Linha divisora (borda superior)
+            .border(width = 0.4.dp, color = Color.LightGray) // Linha divisora (borda superior)
             .padding(horizontal = 16.dp, vertical = 2.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

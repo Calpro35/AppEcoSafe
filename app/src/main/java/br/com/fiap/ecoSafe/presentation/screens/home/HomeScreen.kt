@@ -39,7 +39,7 @@ fun HomeScreen(navController: NavController) {
                 HeaderSection(onMenuClick = { isMenuOpen = true })
                 Spacer(modifier = Modifier.height(5.dp))
                 StatisticsSection()
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(3.dp))
                 IdentifySpeciesButton(onClick = {
                     navController.navigate("camera_screen") // Navega para a tela de câmera
                 })

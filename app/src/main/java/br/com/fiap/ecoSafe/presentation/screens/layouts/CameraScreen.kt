@@ -11,15 +11,19 @@ import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Arrangement.Horizontal
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -44,7 +48,6 @@ import br.com.fiap.ecosafe.R
 import java.io.File
 import br.com.fiap.ecoSafe.utils.toBase64 // Ajuste o caminho do pacote
 
-
 @Composable
 fun CameraScreen(
     onBackClick: () -> Unit,
@@ -52,19 +55,17 @@ fun CameraScreen(
 ) {
     var isMenuOpen by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize().padding(top = 20.dp)) {
-        Column {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
             // Header da tela
             HeaderCamera(onMenuClick = { isMenuOpen = true })
 
             // Conteúdo principal da câmera
             CameraContent(
                 onBackClick = onBackClick,
-                onCaptureClick = { imageBytes ->
-                    // Navegar para a tela de detalhes da foto
-                    val imageBase64 = imageBytes.toBase64()
-                    navController.navigate("photo_details/$imageBase64")
-                }
+                navController = navController
             )
         }
 
@@ -80,18 +81,15 @@ fun CameraScreen(
         }
 
         // Footer fixo na parte inferior
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-        ) {
-            Footer(navController = navController)
-        }
+//        Box(
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .fillMaxWidth()
+//        ) {
+//            Footer(navController = navController)
+//        }
     }
 }
-
-
-
 
 @Composable
 fun HeaderCamera(
@@ -103,8 +101,8 @@ fun HeaderCamera(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
-               // .padding(horizontal = 16.dp, vertical = 8.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 1.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Texto "Explore" centralizado
@@ -112,7 +110,7 @@ fun HeaderCamera(
                 text = "Explore",
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 26.dp),
+                    .padding(start = 32.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 letterSpacing = 1.sp,
@@ -135,12 +133,10 @@ fun HeaderCamera(
     }
 }
 
-
-
 @Composable
 fun CameraContent(
     onBackClick: () -> Unit,
-    onCaptureClick: (image: ByteArray) -> Unit
+    navController: NavController
 ) {
     val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
@@ -173,7 +169,11 @@ fun CameraContent(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+
+    ) {
         if (hasCameraPermission) {
             // Configurar o controlador da câmera
             val controller = remember {
@@ -187,24 +187,20 @@ fun CameraContent(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.56f)
-                    .padding(0.dp)
-
+                    .weight(0.75f) // Ocupa todo o espaço disponível
             ) {
                 AndroidView(
                     factory = { context ->
                         PreviewView(context).apply {
                             this.controller = controller
-                            scaleType = PreviewView.ScaleType.FIT_CENTER
+                            scaleType = PreviewView.ScaleType.FILL_START
                         }
                     },
                     modifier = Modifier.fillMaxSize()
                 )
                 // Canvas para desenhar o quadrado de foco
                 Canvas(
-                    modifier = Modifier
-                        .fillMaxSize()
-
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     val canvasWidth = size.width
                     val canvasHeight = size.height
@@ -272,16 +268,16 @@ fun CameraContent(
                         strokeWidth = focusStrokeWidth
                     )
                 }
-
             }
-
 
             // Botão de captura
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.23f),
-                    contentAlignment = Alignment.Center
+                    .padding(15.dp) // Padding para o botão
+                    .height(100.dp)
+                    .offset(x = (-6).dp, y = (-10).dp), // Altura fixa para o botão
+                contentAlignment = Alignment.Center
             ) {
                 IconButton(
                     onClick = {
@@ -294,19 +290,22 @@ fun CameraContent(
                             ContextCompat.getMainExecutor(context),
                             object : ImageCapture.OnImageSavedCallback {
                                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                                    // Ler a foto salva e converter para ByteArray
                                     val imageBytes = file.readBytes()
-                                    onCaptureClick(imageBytes) // Passar a foto capturada
+                                    val imageBase64 = imageBytes.toBase64()
+
+                                    // Navegar para a tela de detalhes da foto
+                                    navController.navigate("photo_details/$imageBase64")
                                 }
 
                                 override fun onError(exception: ImageCaptureException) {
+                                    // Tratar erro
                                     Log.e("CameraContent", "Erro ao capturar foto: ${exception.message}")
                                 }
                             }
                         )
                     },
-                    modifier = Modifier
-                        .size(70.dp).offset(x =(-5).dp, y = (-25).dp )
-
+                    modifier = Modifier.size(75.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.btn_photo),

@@ -25,7 +25,7 @@ import br.com.fiap.ecoSafe.presentation.screens.layouts.CameraScreen
 import br.com.fiap.ecoSafe.presentation.screens.layouts.PhotoScreen
 
 sealed class Screen(val route: String) {
-    object Splash : Screen("splash_screen")
+    object SplashActivity : Screen("splash_screen")
     object Login : Screen("login_screen")
     object Cadastro : Screen("cadastro_screen")
     object Forget : Screen("Forget_screen")
@@ -39,7 +39,7 @@ sealed class Screen(val route: String) {
     object ThreatenedAreas : Screen("areas_ameacadas")
     object Mapa : Screen("mapa")
     object CameraScreen : Screen("camera_screen") // Nova rota para a tela de câmera
-    object PhotoScreen : Screen("photo_details")
+    object PhotoScreen : Screen("photo_details/{imageBase64}") // Rota com argumento
 
     // Objeto usado para testes do Back-End
     object TestApi : Screen("teste")
@@ -47,8 +47,8 @@ sealed class Screen(val route: String) {
 
 @Composable
 fun AppNavigation(navController: NavHostController, context: Context) {
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
-        composable(Screen.Splash.route) { SplashActivity(navController) }
+    NavHost(navController = navController, startDestination = Screen.SplashActivity.route) {
+        composable(Screen.SplashActivity.route) { SplashActivity(navController) }
         composable(Screen.Login.route) { LoginScreen(navController) }
         composable(Screen.Cadastro.route) { CadastroScreen(navController) }
         composable(Screen.Forget.route) { ForgetScreen(navController) }
@@ -68,7 +68,7 @@ fun AppNavigation(navController: NavHostController, context: Context) {
             )
         }
         composable(
-            route = "photo_details/{imageBase64}", // Rota com argumento
+            route = Screen.PhotoScreen.route, // Usa a rota definida no objeto
             arguments = listOf(
                 navArgument("imageBase64") { type = NavType.StringType }
             )
