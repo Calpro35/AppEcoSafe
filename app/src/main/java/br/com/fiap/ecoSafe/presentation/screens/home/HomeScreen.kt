@@ -127,7 +127,7 @@ fun HeaderSection(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.ecosafe_home),
+                painter = painterResource(id = R.drawable.ecosafehome),
                 contentDescription = "Logo",
                 modifier = Modifier
                     .align(Alignment.TopCenter)

@@ -120,7 +120,7 @@ fun FooterIcon(
             ) {
                 onClick() // Ação ao clicar
             }
-            .padding(vertical = 6.dp) // Adiciona um padding vertical para melhorar o espaçamento
+            .padding(vertical = 2.dp) // Adiciona um padding vertical para melhorar o espaçamento
     ) {
         Icon(
             painter = painter,
@@ -135,7 +135,8 @@ fun FooterIcon(
             fontSize = 12.sp,
             color = if (isSelected) Color(0xFF417505) else Color(0xFF696565), // Muda a cor do texto quando selecionado
             fontFamily = RobotoFontFamily,
-            fontWeight = FontWeight.Normal
+            fontWeight = FontWeight.Normal,
+
         )
     }
 }

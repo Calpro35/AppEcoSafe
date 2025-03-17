@@ -70,7 +70,7 @@ fun AnimalCard(
                 Text(
                     text = location,
                     fontSize = 13.sp,
-                    color = Color.LightGray
+                    color = Color(0xFF696565)
                 )
             }
         }

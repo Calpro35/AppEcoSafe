@@ -1,6 +1,9 @@
 package br.com.fiap.ecoSafe.presentation.screens.layouts
 
+import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,12 +25,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
+import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
 import br.com.fiap.ecosafe.R
+import android.net.Uri
+import java.net.URL
+
 
 @Composable
 fun Denounces(navController: NavController) {
@@ -45,9 +58,11 @@ fun Denounces(navController: NavController) {
                     onMenuClick = { isMenuOpen = true },
                     BackClick = { navController.navigate("home_Screen") }
                 )
+                Spacer(modifier = Modifier.height(24.dp))
 
-                Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
-            }
+                MainDenuncia()
+
+              }
         }
 
         // Menu Hambúrguer
@@ -115,3 +130,79 @@ fun HeaderDenuncia(
         }
     }
 }
+
+
+@Composable
+fun MainDenuncia() {
+    val context = LocalContext.current
+
+    // Lista de itens com texto e URL correspondente
+    val denuncias = listOf(
+        DenunciaItem("CAÇA-ILEGAL", "https://www.exemplo.com/caca-ilegal"),
+        DenunciaItem("MAUS-TRATOS", "https://www.exemplo.com/maus-tratos"),
+        DenunciaItem("ANIMAIS EM EXTINÇÃO", "https://www.exemplo.com/animais-extincao"),
+        DenunciaItem("CUIDADOS ANIMAL FERIDO", "https://www.exemplo.com/animal-ferido")
+    )
+
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(15.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Título
+        Text(
+            text = "DENÚNCIAS",
+            fontSize = 32.sp,
+            color = Color(0xFFB51717),
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.SemiBold
+        )
+
+        Spacer(modifier = Modifier.height(45.dp))
+
+        // Lista de denúncias
+        denuncias.forEach { denuncia ->
+            DenunciaItemView(denuncia, context)
+            Spacer(modifier = Modifier.height(28.dp))
+        }
+    }
+}
+
+@Composable
+fun DenunciaItemView(denuncia: DenunciaItem, context: android.content.Context) {
+    Text(
+        text = denuncia.text,
+        fontSize = 20.sp,
+        color = Color(0xFF2A8255),
+        fontFamily = InterFontFamily,
+        modifier = Modifier
+            .clickable {
+                // Abrir o site no navegador
+                openUrlInBrowser(denuncia.url, context)
+            }
+            .padding(8.dp) // Adicione padding para melhorar a área clicável
+    )
+}
+
+// Função para abrir URL no navegador
+fun openUrlInBrowser(url: String, context: android.content.Context) {
+    try {
+        // Verifica se o URL é válido
+        URL(url) // Isso lançará uma exceção se o URL não for válido
+
+        // Cria uma Intent para abrir o navegador
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = android.net.Uri.parse(url) // Usa Uri.parse internamente
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        // Trata erros (por exemplo, URL inválido)
+        e.printStackTrace()
+    }
+}
+
+// Data class para representar um item de denúncia
+data class DenunciaItem(
+    val text: String,
+    val url: String
+)
