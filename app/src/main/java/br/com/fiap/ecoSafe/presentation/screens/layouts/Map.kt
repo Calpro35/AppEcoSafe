@@ -108,7 +108,7 @@ fun MainMap(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 2.dp),
+            .padding(horizontal = 5.dp, vertical = 5.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SearchBar {}
@@ -242,7 +242,7 @@ fun FaunaLocalScreen(
             sightingsText = "50 Avistamentos",
             onClick = {
                 // Ação ao clicar no card
-                println("Card 2 clicado!")
+
             }
         )
 
@@ -258,7 +258,7 @@ fun FaunaLocalScreen(
             sightingsText = "123 Avistamentos",
             onClick = {
                 // Ação ao clicar no card
-                println("Card 3 clicado!")
+
             }
         )
         Spacer(modifier = Modifier.height(30.dp))

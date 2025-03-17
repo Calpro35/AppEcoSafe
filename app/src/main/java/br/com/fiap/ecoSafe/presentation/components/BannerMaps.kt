@@ -31,7 +31,7 @@ fun BannerWithMap() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp).padding(8.dp)
+            .height(250.dp).padding(4.dp)
     ) {
         // Exibe o mapa do Google Maps
         GoogleMap(

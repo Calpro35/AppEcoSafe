@@ -47,14 +47,14 @@ fun AnimalCard(
         Column(
             modifier = Modifier
                 .weight(1f),
-               //.padding(start = 3.dp),
+              // .padding(start = 3.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = name,
                 fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = 4.dp)
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = 6.dp)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -64,8 +64,8 @@ fun AnimalCard(
                     contentDescription = null,
                     tint = Color(0xFF177437),
                     modifier = Modifier
-                        .size(19.dp)
-                        .padding(end = 4.dp)
+                        .size(23.dp)
+                        .padding(end = 6.dp)
                 )
                 Text(
                     text = location,
@@ -97,7 +97,7 @@ fun AnimalCard(
                     contentDescription = null,
                     tint = Color(0xFF314C1C),
                     modifier = Modifier
-                        .size(19.dp)
+                        .size(22.dp)
                         .padding(end = 4.dp)
                 )
                 Text(
