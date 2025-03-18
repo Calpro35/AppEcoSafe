@@ -22,8 +22,7 @@
         tools:targetApi="33">
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDpW4tTAOTl6dIdVc5QhZLfj2aWi7IBZy0" />
+             />
 
         <activity
             android:name="br.com.fiap.ecoSafe.MainActivity"
