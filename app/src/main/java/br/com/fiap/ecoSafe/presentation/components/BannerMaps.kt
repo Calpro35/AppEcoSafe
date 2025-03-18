@@ -25,7 +25,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 @Composable
 fun BannerWithMap() {
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(LatLng(-23.5505, -46.6333), 10f) // Coordenadas de São Paulo
+        // Coordenadas de São Paulo
     }
 
     Box(
