@@ -112,7 +112,7 @@ fun HeaderEndangered(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp,
-                color = Color(0xFF2D2A2A),
+                color = Color(0xFF35580C)
             )
 
             IconButton(
@@ -163,10 +163,10 @@ fun MainEndangered(context: Context) {
             if (isLoading.value) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             } else {
-                LazyColumn(modifier = Modifier.height(500.dp))  {
+                LazyColumn(modifier = Modifier.height(700.dp))  {
                     items(speciesListState.value) { specie ->
                         SpecieCard(specie)
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(7.dp))
                     }
                 }
             }
@@ -202,7 +202,7 @@ fun SpecieCard(specie: Specie){
     {
         situation = "Extinta"
     }
-    Card(colors = CardDefaults.cardColors(Color.DarkGray),
+    Card(colors = CardDefaults.cardColors(Color.Gray),
         modifier = Modifier.padding(bottom = 8.dp),
         onClick = {
             getSpecieDetails(
@@ -212,7 +212,7 @@ fun SpecieCard(specie: Specie){
     )
     {
         Column(modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(16.dp)) {
             Text(
                 text = "Espécie: ${specie.especie}",

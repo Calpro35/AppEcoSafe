@@ -37,7 +37,9 @@ fun RecentDiscoveries(navController: NavController) {
                     onBackClick = { navController.navigate("home_Screen") }
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                MainRecovery()
+                MainRecovery(
+                onBackDiscovery = {navController.navigate("home_Screen")}
+                )
             }
         }
         // Menu Hambúrguer
@@ -105,29 +107,69 @@ fun HeaderDiscovery(
 
 
 @Composable
-fun MainRecovery(modifier: Modifier = Modifier) {
+fun MainRecovery(
+    onBackDiscovery: () -> Unit,
+    modifier: Modifier = Modifier
+
+) {
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
-             horizontalAlignment = Alignment.CenterHorizontally
+             horizontalAlignment = Alignment.Start
     ) {
-        // Barra de Pesquisa
-        SearchBar {}
 
-        Spacer(modifier = Modifier.height(15.dp))
+
+       //
 
         Text(
             text = "Descobertas Recentes",
-            modifier = Modifier,
+            modifier = Modifier.padding(start = 7.dp),
             fontSize = 18.sp,
-            color = Color(0xFF1B5E20),
-            fontWeight = FontWeight.Bold
+            color = Color(0xFF35580C),
+            fontWeight = FontWeight.SemiBold,
+            letterSpacing = 1.sp
+
         )
 
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // Barra de Pesquisa
+        SearchBar {}
+        Spacer(modifier = Modifier.height(24.dp))
         // Componente AnimalCarousel
-        AnimalCarousel()
+
+            AnimalCarousel(
+                modifier = Modifier.fillMaxWidth(),
+                cardWidth = 280, // Cards menores
+                cardHeight = 400, // Altura reduzida
+                contentPadding = PaddingValues(horizontal = 1.dp), // Espaçamento horizontal
+                horizontalArrangement = Arrangement.spacedBy(18.dp),
+                imageCard = 200,
+                iconId = R.drawable.location_map
+                 // Menor espaçamento entre os itens
+                )
+
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+       TextButton (
+            onClick = onBackDiscovery,
+           modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Voltar",
+                fontSize = 15.sp,
+                color = Color.Gray
+            )
+        }
+
+
     }
+
+
 }
 
 

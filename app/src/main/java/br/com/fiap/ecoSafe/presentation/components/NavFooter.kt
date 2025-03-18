@@ -3,6 +3,7 @@ package br.com.fiap.ecoSafe.presentation.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,9 +30,9 @@ fun Footer(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(61.dp)
+            .height(60.dp)
             .background(Color.White)
-            .border(width = 0.2.dp, color = Color(0xFFC0B4B4)) // Linha divisora (borda superior)
+            .border(width = 0.4.dp, color = Color.LightGray) // Linha divisora (borda superior)
             .padding(horizontal = 16.dp, vertical = 2.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -66,9 +67,9 @@ fun Footer(navController: NavController) {
         FooterIcon(
             painter = painterResource(id = R.drawable.camera_ham),
             label = "Explorar",
-            isSelected = currentRoute == "camera",
+            isSelected = currentRoute == "camera_screen",
             onClick = {
-                navController.navigate("camera") {
+                navController.navigate("camera_screen") {
                     popUpTo(navController.graph.startDestinationId)
                     launchSingleTop = true
                 }
@@ -113,14 +114,20 @@ fun FooterIcon(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .clickable { onClick() }
-            .padding(vertical = 4.dp) // Adiciona um padding vertical para melhorar o espaçamento
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() }, // Interação personalizada
+                indication = null // Remove o efeito de sombra (ripple effect)
+            ) {
+                onClick() // Ação ao clicar
+            }
+            .padding(vertical = 2.dp) // Adiciona um padding vertical para melhorar o espaçamento
     ) {
         Icon(
             painter = painter,
             contentDescription = label,
-            modifier = Modifier.padding(0.dp)
-                .size(if (isSelected) 25.dp else 25.dp), // Aumenta o tamanho do ícone quando selecionado
+            modifier = Modifier
+                .padding(0.dp)
+                .size(25.dp), // Tamanho do ícone
             tint = if (isSelected) Color(0xFF417505) else Color(0xFF696565) // Muda a cor do ícone quando selecionado
         )
         Text(
@@ -128,9 +135,7 @@ fun FooterIcon(
             fontSize = 12.sp,
             color = if (isSelected) Color(0xFF417505) else Color(0xFF696565), // Muda a cor do texto quando selecionado
             fontFamily = RobotoFontFamily,
-            fontWeight = FontWeight.Normal
-
-
+            fontWeight = FontWeight.Normal,
 
         )
     }

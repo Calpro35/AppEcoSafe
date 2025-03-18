@@ -99,12 +99,12 @@ fun HeaderExtincion(onMenuClick: () -> Unit) {
                 text = "Extinção",
                 modifier = Modifier
                     .weight(1f)
-                    .offset(x = 22.dp),
+                    .offset(x = 20.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp,
-                color = Color(0xFF2D2A2A),
+                color = Color(0xFF35580C),
             )
 
             IconButton(
@@ -164,10 +164,12 @@ fun MainExtincion() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Barra de Pesquisa
-        SearchBar {}
-
-        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 3.dp)
+        ) {// Barra de Pesquisa
+            SearchBar {}
+        }
+        Spacer(modifier = Modifier.height(2.dp))
 
         // Lista de Cards
         val items = listOf(
@@ -194,7 +196,7 @@ fun TwoColumnGrid(items: List<CardItem>) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp), // Adiciona padding horizontal
+                    .padding(horizontal = 10.dp, vertical = 5.dp), // Adiciona padding horizontal
                 horizontalArrangement = Arrangement.SpaceBetween // Espaço entre os cards
             ) {
                 // Primeiro item da linha
@@ -215,7 +217,7 @@ fun TwoColumnGrid(items: List<CardItem>) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(13.dp)) // Espaço entre as linhas
+            Spacer(modifier = Modifier.height(18.dp)) // Espaço entre as linhas
         }
     }
 }

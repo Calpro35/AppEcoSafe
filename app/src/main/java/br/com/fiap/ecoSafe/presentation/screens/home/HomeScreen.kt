@@ -39,13 +39,13 @@ fun HomeScreen(navController: NavController) {
                 HeaderSection(onMenuClick = { isMenuOpen = true })
                 Spacer(modifier = Modifier.height(5.dp))
                 StatisticsSection()
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(3.dp))
                 IdentifySpeciesButton(onClick = {
                     navController.navigate("camera_screen") // Navega para a tela de câmera
                 })
                 Spacer(modifier = Modifier.height(30.dp))
                 RecentDiscoveriesSection()
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(15.dp))
                 ResourcesSection()
             }
         }
@@ -92,11 +92,11 @@ fun HeaderSection(
                 text = "Home",
                 modifier = Modifier
                     .weight(1f) // Ocupa o espaço restante e centraliza o texto
-                    .offset(x = 22.dp, y = 4.dp),
+                    .offset(x = 19.dp, y = 4.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF2D2A2A),
+                color = Color(0xFF35580C),
             )
 
             // Ícone do menu hambúrguer (agora à direita)
@@ -127,7 +127,7 @@ fun HeaderSection(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.ecosafe_home),
+                painter = painterResource(id = R.drawable.ecosafehome),
                 contentDescription = "Logo",
                 modifier = Modifier
                     .align(Alignment.TopCenter)
@@ -148,13 +148,13 @@ fun HeaderSection(
         }
 
         // Reduzir o espaço abaixo do banner
-        Spacer(modifier = Modifier.height(5.dp)) // Espaço reduzido
+        Spacer(modifier = Modifier.height(9.dp)) // Espaço reduzido
 
         // Textos abaixo do banner
         Text(
             text = "O Meio Ambiente Conectado com Você",
             fontSize = 16.sp,
-            letterSpacing = 0.5.sp,
+            letterSpacing = 0.9.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = InterFontFamily,
             color = Color.Gray,
@@ -178,7 +178,7 @@ fun StatisticsSection() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(13.dp),
+            .padding(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Primeira linha com dois banners lado a lado
@@ -271,10 +271,13 @@ fun RecentDiscoveriesSection() {
 
         AnimalCarousel(
             modifier = Modifier.fillMaxWidth(),
-            cardWidth = 250, // Cards menores
-            cardHeight = 380, // Altura reduzida
-            contentPadding = PaddingValues(horizontal = 8.dp), // Espaçamento horizontal
-            horizontalArrangement = Arrangement.spacedBy(8.dp) // Menor espaçamento entre os itens
+            cardWidth = 200, // Cards menores
+            cardHeight = 350, // Altura reduzida
+            contentPadding = PaddingValues(horizontal = 7.dp), // Espaçamento horizontal
+            horizontalArrangement = Arrangement.spacedBy(12.dp),// Menor espaçamento entre os itens
+            imageCard = 150,
+            iconId = R.drawable.location_map
+
         )
     }
 }
