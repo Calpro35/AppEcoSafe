@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.presentation.screens.layouts
 
+import CustomTextField
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,12 +15,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.fiap.ecoSafe.data.model.User
 import br.com.fiap.ecoSafe.presentation.components.Footer
+import br.com.fiap.ecoSafe.presentation.components.GradientButton
 import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
+import br.com.fiap.ecoSafe.ui.theme.RobotoFontFamily
 import br.com.fiap.ecosafe.R
 
 @Composable
@@ -35,8 +40,10 @@ fun Profile(navController: NavController) {
         ) {
             item {
                 HeaderProfile(onMenuClick = { isMenuOpen = true })
-                Spacer(modifier = Modifier.height(24.dp).padding(10.dp))
-                        MainProfile()
+                Spacer(modifier = Modifier
+                    .height(24.dp)
+                    .padding(10.dp))
+                MainProfile()
             }
         }
 
@@ -73,6 +80,7 @@ fun HeaderProfile(onMenuClick: () -> Unit) {
                 .padding(0.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             // Texto "Home" centralizado
             Text(
                 text = "Perfil",
@@ -102,12 +110,29 @@ fun HeaderProfile(onMenuClick: () -> Unit) {
 }
 
 @Composable
-fun MainProfile(modifier: Modifier = Modifier) {
+fun MainProfile() {
+
+    var name by remember { mutableStateOf("José Silva Junior") }
+    var email by remember { mutableStateOf("10/02/2025") }
+    var password by remember { mutableStateOf("********") }
+    var passwordNew by remember { mutableStateOf("*******") }
+    var isPasswordVisible by remember { mutableStateOf(false) }
+    var isConfirmPasswordVisible by remember { mutableStateOf(false) }
+
+
+
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally // Centraliza o conteúdo horizontalmente
     ) {
         // Conteudo da pagina
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        //ProfileImage()
+
         Text(
             text = "João Silva",
             fontSize = 24.sp,
@@ -119,51 +144,119 @@ fun MainProfile(modifier: Modifier = Modifier) {
             text = "Desde: 10/02/2025",
             fontSize = 16.sp,
             color = Color.Gray,
-            modifier = Modifier.padding(bottom = 16.dp)
+       )
+
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        CustomTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = "Nome",
+            placeholder = "Digite seu nome completo"
         )
 
-        OutlinedTextField(
-            value = "Jose Silva Junior",
-            onValueChange = { },
-            label = { Text("Nome") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            readOnly = true
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CustomTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = "E-mail",
+            placeholder = "email@email.com",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.email_24),
+                    contentDescription = "Email",
+                    tint = Color.Gray
+                )
+            }
         )
 
-        OutlinedTextField(
-            value = "teste@teste.com.br",
-            onValueChange = { },
-            label = { Text("Email") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            readOnly = true
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CustomTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = "Senha",
+            placeholder = "Digite sua senha",
+            trailIcon = {
+                IconButton(
+                    onClick = { isPasswordVisible = !isPasswordVisible }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            if (isPasswordVisible) R.drawable.visibility_on else R.drawable.visibility_off
+                        ),
+                        contentDescription = if (isPasswordVisible) "Ocultar senha" else "Mostrar senha",
+                        tint = Color.Gray
+                    )
+                }
+            },
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
 
-        OutlinedTextField(
-            value = "********",
-            onValueChange = { },
-            label = { Text("Senha") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            readOnly = true
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CustomTextField(
+            value = passwordNew,
+            onValueChange = { passwordNew = it },
+            label = "Confirma Senha",
+            placeholder = "Digite Novamente",
+            trailIcon = {
+                IconButton(
+                    onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            if (isConfirmPasswordVisible) R.drawable.visibility_on else R.drawable.visibility_off
+                        ),
+                        contentDescription = if (isConfirmPasswordVisible) "Ocultar senha" else "Mostrar senha",
+                        tint = Color.Gray
+                    )
+                }
+            },
+            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        // Botão de Alterar (pode ser implementado para editar os campos)
-        Button(
-            onClick = { /* Implementar ação de alteração */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF417505)),
-        ) {
-            Text("Alterar")
-        }
+        GradientButton(
+            text = "Alterar",
+            onClick = {
+                // Lógica para alterar senha
+
+            },
+
+        )
     }
 }
+
+
+//@Composable
+//fun ProfileImage() {
+//    var image by remember { mutableIntStateOf(R.drawable.placeholder) } // Use uma imagem placeholder inicial
+//
+//    Box(
+//        contentAlignment = Alignment.BottomEnd,
+//        modifier = Modifier.size(120.dp)
+//    ) {
+//        Image(
+//            painter = painterResource(id = image),
+//            contentDescription = "Profile Image",
+//            modifier = Modifier
+//                .size(120.dp)
+//                .clip(CircleShape),
+//            contentScale = ContentScale.Crop
+//        )
+//
+//        IconButton(
+//            onClick = { /* Lógica para abrir a galeria ou câmera */ },
+//            modifier = Modifier.size(40.dp)
+//        ) {
+//            Icon(
+//                painter = painterResource(id = R.drawable.add_photo), // Ícone de câmera
+//                contentDescription = "Upload Photo"
+//            )
+//        }
+//    }
+//}

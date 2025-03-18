@@ -1,5 +1,6 @@
 package br.com.fiap.ecoSafe.presentation.components
 
+import android.icu.number.IntegerWidth
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 fun GradientButton(
     text: String,
     onClick: () -> Unit
+
 ) {
     Button(
         onClick = onClick,

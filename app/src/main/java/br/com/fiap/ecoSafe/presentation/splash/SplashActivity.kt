@@ -25,7 +25,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashActivity(navController: NavController) {
     LaunchedEffect(Unit) {
-        delay(3000)
+        delay(2000)
         navController.navigate(Screen.Login.route) {
             popUpTo(0) // Remove a Splash Screen da pilha
         }
@@ -37,12 +37,12 @@ fun SplashActivity(navController: NavController) {
 
         ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_logo),
+            painter = painterResource(id = R.drawable.ecoficial),
             contentDescription = "Logo",
             modifier = Modifier
-                .size(155.dp)
+                .size(100.dp)
                 .aspectRatio(1f) // Mantém a proporção (quadrado)
-                .offset(x = 6.dp, y = (-27).dp)
+                .offset(x = 2.dp, y = (-17).dp)
         )
 
 

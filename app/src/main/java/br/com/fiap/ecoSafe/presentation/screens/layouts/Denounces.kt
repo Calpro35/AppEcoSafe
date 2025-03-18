@@ -35,9 +35,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.ecoSafe.presentation.components.Footer
 import br.com.fiap.ecoSafe.presentation.components.HamburgerMenu
-import br.com.fiap.ecoSafe.ui.theme.InterFontFamily
 import br.com.fiap.ecosafe.R
-import android.net.Uri
+
+import br.com.fiap.ecoSafe.ui.theme.OpensSansFontFamily
 import java.net.URL
 
 
@@ -138,24 +138,25 @@ fun MainDenuncia() {
 
     // Lista de itens com texto e URL correspondente
     val denuncias = listOf(
-        DenunciaItem("CAÇA-ILEGAL", "https://www.exemplo.com/caca-ilegal"),
-        DenunciaItem("MAUS-TRATOS", "https://www.exemplo.com/maus-tratos"),
+        DenunciaItem("CAÇA-ilegal", "https://www.ibama.gov.br/denuncias"),
+        DenunciaItem("Meio AMBIENTE", "https://www.gov.br/mma/pt-b"),
+        DenunciaItem("MAUS-TRATOS", "https://www.polmil.sp.gov.br/unidades/especializadas/ambiental/"),
         DenunciaItem("ANIMAIS EM EXTINÇÃO", "https://www.exemplo.com/animais-extincao"),
-        DenunciaItem("CUIDADOS ANIMAL FERIDO", "https://www.exemplo.com/animal-ferido")
+        DenunciaItem("CUIDADOS ANIMAL FERIDO", "https://arcabrasil.org.br/")
     )
 
     Column (
         modifier = Modifier
             .fillMaxSize()
             .padding(15.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
         // Título
         Text(
             text = "DENÚNCIAS",
-            fontSize = 32.sp,
+            fontSize = 25.sp,
             color = Color(0xFFB51717),
-            fontFamily = InterFontFamily,
+            fontFamily = OpensSansFontFamily,
             fontWeight = FontWeight.SemiBold
         )
 
@@ -173,9 +174,9 @@ fun MainDenuncia() {
 fun DenunciaItemView(denuncia: DenunciaItem, context: android.content.Context) {
     Text(
         text = denuncia.text,
-        fontSize = 20.sp,
+        fontSize = 18.sp,
         color = Color(0xFF2A8255),
-        fontFamily = InterFontFamily,
+        fontFamily = OpensSansFontFamily,
         modifier = Modifier
             .clickable {
                 // Abrir o site no navegador

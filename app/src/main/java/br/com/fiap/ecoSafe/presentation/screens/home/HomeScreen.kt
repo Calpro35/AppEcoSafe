@@ -300,6 +300,7 @@ fun ResourcesSection() {
         )
 
         Spacer(modifier = Modifier.height(15.dp))
+
         resources.forEach { resource ->
             ResourceCard(resource)
             Spacer(modifier = Modifier.height(8.dp))
